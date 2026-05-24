@@ -7,6 +7,8 @@ logo — логотип компании
 website — сайт компании  
 location — местоположение компании  
 created_at — дата создания профиля компании
+
+
 👤 User
 
 username — логин пользователя  
@@ -16,6 +18,8 @@ role — роль пользователя (seeker/employer)
 image — аватар пользователя  
 phone — номер телефона  
 date_joined — дата регистрации
+
+
 👨‍💻 SeekerProfile
 
 user (OneToOne) — владелец профиля  
@@ -26,6 +30,9 @@ experience — опыт работы
 education — образование  
 birth_date — дата рождения  
 location — город проживания
+
+
+
 💼 Job
 
 company (ForeignKey) — компания которая создала вакансию  
@@ -39,11 +46,15 @@ category (ForeignKey) — категория вакансии
 created_at — дата публикации  
 deadline — срок окончания вакансии  
 is_active — активна ли вакансия
+
+
 📂 Category
 
 name — название категории  
 icon — иконка категории  
 description — описание категории
+
+
 📩 Application
 
 job (ForeignKey) — вакансия  
@@ -52,6 +63,8 @@ message — сообщение работодателю
 resume — резюме при отклике  
 status — статус заявки (pending/accepted/rejected)  
 created_at — дата отклика
+
+
 ⭐ FavoriteJob
 
 user (ForeignKey) — пользователь  
