@@ -1,0 +1,16 @@
+{% extends "acc/reg.html" %}
+
+{% block main %}
+    <form action="{% url 'forget' %}" method="post">
+        {% csrf_token %}
+
+        <label for="email">Email</label><br>
+         <input type="text" name="email" id=""><br><br>
+        
+        {% if eror %}
+            <p>{{eror}}</p>
+        {% endif %}
+        
+        <button type="submit">Confirm</button>
+    </form>
+{% endblock %}

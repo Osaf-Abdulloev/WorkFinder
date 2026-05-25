@@ -175,6 +175,28 @@ def emailconf(request):
 
 
 
+def emailconf2(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        code = request.POST.get('code')
+        
+        user = User.objects.filter(username = username).first()
+        
+        if not user:
+            return render(request, 'acc/emailconf2.html', context={'eror' : 'Invalid username'})
+        
+        if not EmailConfirm.objects.filter(user = user, code = code).first():
+            return render(request, 'acc/emailconf2.html', context={'eror' : 'Invalid code from gmail'})
+        
+        user.is_active = True
+        user.save()
+        
+        return redirect('newpas')
+    
+    return render(request, 'acc/emailconf2.html')
+
+
+
 def login_us(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -195,6 +217,21 @@ def login_us(request):
         login(request, user)
         return redirect('/')
     return render(request, 'acc/login.html')
+
+
+
+def forget(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        
+        user = User.objects.filter(email = email).first()
+        
+        if not user:
+            return render(request, 'acc/forget.html', context={'eror' : f'User with email {email} not found'})
+        
+        sendcode(user=user)
+        return redirect('emailconf2')
+    return render(request, 'acc/forget.html')
 
 
 def logout_us(request):
