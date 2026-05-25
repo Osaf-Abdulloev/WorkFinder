@@ -1,0 +1,19 @@
+{% extends "reg.html" %}
+
+{% block main %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label for="username">Username</label><br>
+         <input type="text" name="username" id=""><br><br>
+        
+        <label for="pas">Password</label><br>
+         <input type="text" name="pas" id=""><br><br>
+        
+        {% if eror %}
+            <p>{{eror}}</p>
+        {% endif %}
+        
+        <button type="submit">Login</button>
+    </form>
+{% endblock %}
