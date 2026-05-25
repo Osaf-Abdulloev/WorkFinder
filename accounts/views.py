@@ -151,4 +151,22 @@ def register(request):
         
 
 
-
+def emailconf(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        code = request.POST.get('code')
+        
+        user = User.objects.filter(username = username).first()
+        
+        if not user:
+            return render(request, 'acc/emailconf.html', context={'eror' : 'Invalid username'})
+        
+        if not EmailConfirm.objects.filter(user = user, code = code).first():
+            return render(request, 'acc/emailconf.html', context={'eror' : 'Invalid code from gmail'})
+        
+        user.is_active = True
+        user.save()
+        
+        return redirect('/')
+    
+    return render(request, 'acc/emailconf.html')
