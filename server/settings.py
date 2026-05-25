@@ -128,3 +128,15 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'abdulloevosaf0@gmail.com'
+EMAIL_HOST_PASSWORD = 'huqg eqii yjyl touy'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+AUTH_USER_MODEL = 'accounts.User'
