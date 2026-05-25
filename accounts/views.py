@@ -151,6 +151,29 @@ def register(request):
         
 
 
+
+def login(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        pas = request.POST.get('pas')
+        
+        user = authenticate(request, username = username, pas = pas)
+        
+        if user.is_active == False:
+            return render(request, 'acc/login.html', context={'eror' : 'Go and confirm your email'})
+        
+        if not user:
+            return render(request, 'acc/login.html', context={'eror' : 'Invalid username or password'})
+        
+        login(request, user)
+        return redirect('/')
+    return render(request, 'acc/login.html')
+
+
+
+
+
+
 def emailconf(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -170,3 +193,6 @@ def emailconf(request):
         return redirect('/')
     
     return render(request, 'acc/emailconf.html')
+
+
+
