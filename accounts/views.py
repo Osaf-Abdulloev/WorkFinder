@@ -142,6 +142,7 @@ def register(request):
             adress = adress,
             img = img)
         
+        user.is_active = False
         user.save()
         
         sendcode(user)
@@ -179,17 +180,23 @@ def login_us(request):
         username = request.POST.get('username')
         pas = request.POST.get('pas')
         
-        user = authenticate(request, username = username, pas = pas)
+        user = authenticate(request, username = username, password = pas)
         
         if not user:
+            print(user)
             return render(request, 'acc/login.html', context={'eror' : 'imvalid username or password'})
         
-        notactive = User.objects.filter(username = username, is_active = False).first()
+        isnt = User.objects.filter(username = username, is_active = False).first()
         
-        if notactive:
+        if isnt:
             return render(request, 'acc/login.html', context={'eror' : 'Go and confirm your email'})
         
         
         login(request, user)
         return redirect('/')
     return render(request, 'acc/login.html')
+
+
+def logout_us(request):
+    logout(request)
+    return redirect('home')
