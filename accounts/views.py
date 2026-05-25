@@ -145,7 +145,7 @@ def register(request):
         user.save()
         
         sendcode(user)
-        return redirect('/')
+        return redirect('emailconf')
     
     return render(request, 'acc/reg.html')
         
@@ -166,7 +166,7 @@ def emailconf(request):
         user.is_active = True
         user.save()
         
-        return redirect('/')
+        return redirect('login')
     
     return render(request, 'acc/emailconf.html')
 
@@ -174,18 +174,21 @@ def emailconf(request):
 
 
 
-def login(request):
+def login_us(request):
     if request.method == "POST":
         username = request.POST.get('username')
         pas = request.POST.get('pas')
         
         user = authenticate(request, username = username, pas = pas)
         
-        if user.is_active == False:
+        if not user:
+            return render(request, 'acc/login.html', context={'eror' : 'imvalid username or password'})
+        
+        notactive = User.objects.filter(username = username, is_active = False).first()
+        
+        if notactive:
             return render(request, 'acc/login.html', context={'eror' : 'Go and confirm your email'})
         
-        if not user:
-            return render(request, 'acc/login.html', context={'eror' : 'Invalid username or password'})
         
         login(request, user)
         return redirect('/')

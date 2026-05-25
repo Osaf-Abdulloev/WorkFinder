@@ -6,47 +6,48 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
 
-        <label for="username">Username</label><br>
-         <input type="text" name="username" id=""><br><br>
-        
-        <label for="pas1">Password</label><br>
-         <input type="text" name="pas1" id=""><br><br>
-
-        <label for="pas2">Try password</label><br>
-         <input type="text" name="pas2" id=""><br><br>
-        
-        <label for="email">Email</label><br>
-         <input type="email" name="email" id=""><br><br>
-        
-        <select name="role">
-            <option value="">Who are you want to be in our site?</option><br>
-            <option value="seeker">Seeker</option>
-            <option value="employer">Employer</option>
-        </select><br><br>
-        
-        <label for="age">Age</label><br>
-         <input type="number" name="age" id=""><br><br>
-        
-        <label for="phone">Phone number</label><br>
-         <input type="text" name="phone" id=""><br><br>
-        
-        <label for="adress">adress</label><br>
-         <input type="text" name="adress" id=""><br><br>
-
-        <label for="img">Not requaried ☻</label><br>
-         <input type="file" name="img" id=""><br><br>
-        
-        {% if eror %}
-            <p>{{eror}}</p>
-        {% endif %}
-        
-        <button type="submit">Register</button>
-    </form>
 
     {% block main %}
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label for="username">Username</label><br>
+            <input type="text" name="username" id=""><br><br>
+            
+            <label for="pas1">Password</label><br>
+            <input type="text" name="pas1" id=""><br><br>
+
+            <label for="pas2">Try password</label><br>
+            <input type="text" name="pas2" id=""><br><br>
+            
+            <label for="email">Email</label><br>
+            <input type="email" name="email" id=""><br><br>
+            
+            <select name="role">
+                <option value="">Who are you want to be in our site?</option><br>
+                <option value="seeker">Seeker</option>
+                <option value="employer">Employer</option>
+            </select><br><br>
+            
+            <label for="age">Age</label><br>
+            <input type="number" name="age" id=""><br><br>
+            
+            <label for="phone">Phone number</label><br>
+            <input type="text" name="phone" id=""><br><br>
+            
+            <label for="adress">adress</label><br>
+            <input type="text" name="adress" id=""><br><br>
+
+            <label for="img">Not requaried ☻</label><br>
+            <input type="file" name="img" id=""><br><br>
+            
+            {% if eror %}
+                <p>{{eror}}</p>
+            {% endif %}
+            
+            <button type="submit">Register</button>
+        </form>
     {% endblock  %}
 </body>
 </html>
