@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="{% url 'create_job' %}">
+        {% csrf_token %}
+        <label for="company">Company</label><br>
+        <input type="text" name="company" id=""><br><br>
+        
+        <label for="title">title</label><br>
+        <input type="text" name="title" id=""><br><br>
+
+        <label for="description">Description</label><br>
+        <textarea name="description" id=""></textarea><br><br>
+
+        <label for="sallary">sallary</label><br>
+        <input type="number" name="sallary" id=""><br><br>
+        
+        <label for="location">location</label><br>
+        <input type="text" name="location" id=""><br><br>
+        
+        <select name="job_type">
+            {% for value, name in job_types %}
+
+                <option value="{{ value }}">
+                    {{ name }}
+                </option>
+
+            {% endfor %}
+        </select>
+
+        <label for="exp_req">exp requaried (in year)</label><br>
+        <input type="number" name="exp_req" id=""><br><br>
+
+        <select name="category" required>
+            <option value="">Choose category</option>
+        
+            {% for i in c %}
+                <option value="{{ i.id }}">
+                    {{ i.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+</body>
+</html>

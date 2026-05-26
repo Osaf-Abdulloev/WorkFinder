@@ -107,6 +107,7 @@ def sendcode(user):
     except Exception as e:
          print(e, '========================================')
 
+
 def register(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -198,8 +199,6 @@ def newpas(request):
         return redirect('login')
     return render(request, 'acc/newpas.html')
         
-        
-
 
 def emailconf2(request):
     if request.method == "POST":
@@ -220,7 +219,6 @@ def emailconf2(request):
         return redirect('newpas')
     
     return render(request, 'acc/emailconf2.html')
-
 
 
 def login_us(request):
@@ -249,7 +247,6 @@ def login_us(request):
         
         return redirect('emp')
     return render(request, 'acc/login.html')
-
 
 
 def seek(request):
@@ -295,7 +292,6 @@ def emp(request):
         return redirect('/')
     return render(request, 'acc/emp.html')
         
-
 
 def forget(request):
     if request.method == "POST":
