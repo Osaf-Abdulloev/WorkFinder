@@ -5,3 +5,4 @@ from .models import *
 
 
 admin.site.register(Emploeer)
+admin.site.register(Seeker)

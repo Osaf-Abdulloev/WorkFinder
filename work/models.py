@@ -14,4 +14,21 @@ class Emploeer(models.Model):
     
     def __str__(self):
         return self.company_name
+    
+    
+
+
+class Seeker(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField()
+    resume = models.FileField(upload_to='resumes/')
+    exp = models.PositiveIntegerField()
+    edu = models.CharField(max_length=50)
+    burth_date = models.DateField()
+    adress = models.CharField(max_length=50)
+    
+    
+    def __str__(self):
+        return f'{self.user.username} || {self.bio}'
+    
 
