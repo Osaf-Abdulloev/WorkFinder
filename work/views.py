@@ -17,7 +17,7 @@ def all_jobs(request):
     return render(request, 'work/all_jobs.html', context={'j' : j})
 
 
-
+@permission_required('work.add_job', login_url='all_jobs')
 def create_job(request):
     
     e = Emploeer.objects.all()
@@ -36,3 +36,26 @@ def create_job(request):
         )
         return redirect('all_jobs')
     return render(request, 'work/create_job.html', context={'job_types': Job.JOB_TYPE, 'c' : c, 'e' : e})
+
+@permission_required('work.change_job', login_url='all_jobs')
+def update_job(request, pk):
+    job = get_object_or_404(Job, pk=pk)
+    
+    j = Job.objects.get(id = job.id)
+    e = Emploeer.objects.all()
+    c = Category.objects.all()
+    
+    
+    if request.method == "POST":
+        job.company_id = request.POST.get('company')
+        job.title = request.POST.get('title')
+        job.description = request.POST.get('description')
+        job.sallary = request.POST.get('sallary')
+        job.location = request.POST.get('location')
+        job.job_type = request.POST.get('job_type')
+        job.exp_req = request.POST.get('exp_req')
+        job.category_id = request.POST.get('category')
+        
+        job.save()
+        return redirect('all_jobs')
+    return render(request, 'work/update_job.html', context={'job_types': Job.JOB_TYPE, 'c' : c, 'e' : e, 'j' : j})

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <select name="company" required>
+            <option value="">Choose company</option>
+        
+            {% for i in e %}
+                <option value="{{ i.id }}">
+                    {{ i.company_name }}
+                </option>
+            {% endfor %}
+        </select><br><br>
+        
+        <label for="title">title</label><br>
+        <input type="text" value="{{j.title}}" name="title" id=""><br><br>
+
+        <label for="description">Description</label><br>
+        <textarea name="description" value="{{j.description}}" id=""></textarea><br><br>
+
+        <label for="sallary">sallary</label><br>
+        <input type="number" value="{{j.sallary}}" name="sallary" id=""><br><br>
+        
+        <label for="location">location</label><br>
+        <input type="text" value="{{j.location}}" name="location" id=""><br><br>
+        
+        <select name="job_type">
+            {% for value, name in job_types %}
+
+                <option value="{{ value }}">
+                    {{ name }}
+                </option>
+
+            {% endfor %}
+        </select><br><br>
+
+        <label for="exp_req">exp requaried (in year)</label><br>
+        <input type="number" value="{{j.exp_req}}" name="exp_req" id=""><br><br>
+
+        <select name="category" required>
+            <option value="">Choose category</option>
+        
+            {% for i in c %}
+                <option value="{{ i.id }}">
+                    {{ i.name }}
+                </option>
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

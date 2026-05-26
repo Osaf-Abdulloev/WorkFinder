@@ -7,7 +7,15 @@
 </head>
 <body>
     {% for i in j %}
+        <p>{{i.company.company_name}}</p>
         <p>{{i.title}}</p>
+        <p>{{i.description}}</p>
+        <p>{{i.sallary}}</p>
+        <p>{{i.location}}</p>
+        <p>{{i.job_type}}</p>
+        <p>{{i.exp_req}}</p>
+        <p>{{i.category.name}}</p>
+        <p>{{i.created_at}}</p>
     {% endfor %}
 </body>
 </html>
