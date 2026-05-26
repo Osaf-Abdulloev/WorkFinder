@@ -103,6 +103,20 @@ def seeker_profile(request, pk):
         return render(request, 'work/emplo_profile.html', context={'e' : emplo})
 
 
+@permission_required('work.add_application', login_url='erorpage')
+def aplicate(request, pk):
+    job = get_object_or_404(Job, pk=pk)
+    
+    if request.method == "POST":
+        Application.objects.create(
+            job_id = job.id,
+            user_id = request.user.id,
+            sms = request.POST.get('sms'),
+            resume = request.FILES.get('resume'),
+            status = 'Sended'
+        )
+        return redirect('all_jobs')
+    return render(request, 'work/aplicate.html')
     
     
     

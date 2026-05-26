@@ -20,6 +20,10 @@
         <p>{{i.exp_req}}</p>
         <p>{{i.category.name}}</p>
         <p>{{i.created_at}}</p>
+
+        <div>
+            <a href="{% url 'aplicate' i.id %}">Aplicate</a>
+        </div>
     {% endfor %}
 </body>
 </html>

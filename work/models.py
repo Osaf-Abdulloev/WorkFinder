@@ -75,7 +75,7 @@ class Application(models.Model):
     status = models.CharField(max_length=25)
     created_at = models.DateTimeField(auto_now_add=True)
     
-    
+        
     
     def __str__(self):
         return self.job.title

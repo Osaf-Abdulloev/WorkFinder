@@ -10,5 +10,6 @@ urlpatterns = [
     path('delete_job/<int:pk>', views.delete_job, name='delete_job'),
     path('erorpage', views.erorpage, name='erorpage'),
     path('my_jobs/<int:pk>', views.my_jobs, name='my_jobs'),
-    path('search/', views.search, name='search')
+    path('search/', views.search, name='search'),
+    path('aplicate/<int:pk>', views.aplicate, name='aplicate')
 ]
