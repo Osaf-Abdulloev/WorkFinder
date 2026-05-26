@@ -12,5 +12,3 @@ def home(request):
 
 
 
-
-

@@ -3,6 +3,7 @@ from .models import *
 from django.contrib.auth import authenticate, login, logout
 import random
 from .models import EmailConfirm
+from work.models import *
 from django.core.mail import send_mail
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
@@ -240,9 +241,40 @@ def login_us(request):
         
         
         login(request, user)
+        
+        isseek = User.objects.filter(username = username, role = 'seeker').first()
+        
+        if isseek:
+            return redirect('seek')
+        
         return redirect('/')
     return render(request, 'acc/login.html')
 
+
+
+def seek(request):
+    if request.method == "POST":
+        user_id = request.user.id
+        bio = request.POST.get('bio')
+        resume = request.FILES.get('resume')
+        exp = request.POST.get('exp')
+        edu = request.POST.get('edu')
+        burth_date = request.POST.get('burth_date')
+        adress = request.POST.get('adress')
+        
+        Seeker.objects.create(
+            user_id = user_id,
+            bio = bio,
+            resume = resume,
+            exp = exp,
+            edu = edu,
+            burth_date = burth_date,
+            adress = adress,
+        )
+        
+        return redirect('/')
+    return render(request, 'acc/seeker.html')
+        
 
 
 def forget(request):
