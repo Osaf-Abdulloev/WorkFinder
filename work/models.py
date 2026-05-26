@@ -62,5 +62,22 @@ class Job(models.Model):
     
     def __str__(self):
         return self.title
+
+
+
+class Application(models.Model):
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    sms = models.TextField()
+    resume = models.FileField(upload_to='resumes/')
+    status = models.CharField(max_length=25)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    
+    
+    def __str__(self):
+        return self.job.title
+    
+    
     
 
