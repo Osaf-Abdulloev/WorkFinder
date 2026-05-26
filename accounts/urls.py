@@ -11,5 +11,4 @@ urlpatterns = [
     path('emailconf2/', views.emailconf2, name='emailconf2'),
     path('newpas/', views.newpas, name='newpas'),
     path('seek/', views.seek, name='seek')
-    
 ]

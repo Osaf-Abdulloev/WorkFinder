@@ -247,7 +247,7 @@ def login_us(request):
         if isseek:
             return redirect('seek')
         
-        return redirect('/')
+        return redirect('emp')
     return render(request, 'acc/login.html')
 
 
@@ -274,6 +274,26 @@ def seek(request):
         
         return redirect('/')
     return render(request, 'acc/seeker.html')
+        
+
+def emp(request):
+    if request.method == "POST":
+        user_id = request.user.id
+        company_name = request.POST.get('company_name')
+        about = request.POST.get('about')
+        logo = request.FILES.get('logo')
+        location = request.POST.get('location')
+        
+        Emploeer.objects.create(
+            user_id = user_id,
+            company_name = company_name,
+            about = about,
+            logo = logo,
+            location = location
+        )
+        
+        return redirect('/')
+    return render(request, 'acc/emp.html')
         
 
 
