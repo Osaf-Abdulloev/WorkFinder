@@ -20,7 +20,7 @@ class Emploeer(models.Model):
 
 
 class Seeker(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='seekerprogile')
     bio = models.TextField()
     resume = models.FileField(upload_to='resumes/')
     exp = models.PositiveIntegerField()

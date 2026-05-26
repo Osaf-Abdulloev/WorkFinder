@@ -59,3 +59,21 @@ def update_job(request, pk):
         job.save()
         return redirect('all_jobs')
     return render(request, 'work/update_job.html', context={'job_types': Job.JOB_TYPE, 'c' : c, 'e' : e, 'j' : j})
+
+
+
+def seeker_profile(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    seek = Seeker.objects.filter(user_id = user.id)
+    emplo = Emploeer.objects.filter(user_id = user.id)
+    
+    if seek:
+        return render(request, 'work/seeker_profile.html', context={'s' : seek})
+    
+    if emplo:
+        return render(request, 'work/emplo_profile.html', context={'s' : seek})
+    
+    
+    
+    
+

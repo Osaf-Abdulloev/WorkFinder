@@ -14,6 +14,7 @@
                 <a href="{% url 'logout_us' %}">logout</a>
                 <a href="{% url 'all_jobs' %}">all_jobs</a>
                 <a href="{% url 'create_job' %}">create_job</a>
+                <a href="{% url 'seeker_profile' request.user.id %}">profile</a>
             
             {% else %}
 
