@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from accounts.models import User
 from .models import *
 from django.contrib.auth.decorators import permission_required, login_required
+from django.db.models import Q
 # Create your views here.
 
 def home(request):
@@ -47,6 +48,14 @@ def my_jobs(request, pk):
     
     return render(request, 'work/my_jobs.html', context={'j' : jobs})
 
+
+def search(request):
+    if request.method == "GET":
+        q = request.GET.get('q', '')
+        
+        j = Job.objects.filter( Q(title__icontains=q) | Q(category__name__icontains=q) | Q(company__company_name__icontains=q))
+        
+        return render(request, 'work/all_jobs.html', context={'j' : j})
 
 @permission_required('work.change_job', login_url='erorpage')
 def update_job(request, pk):
