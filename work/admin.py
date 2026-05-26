@@ -6,3 +6,4 @@ from .models import *
 
 admin.site.register(Emploeer)
 admin.site.register(Seeker)
+admin.site.register(Category)
