@@ -1,0 +1,21 @@
+{% extends "acc/reg.html" %}
+
+{% block main %}
+        <form action="{% url 'emp' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label for="company_name">company_name</label><br>
+            <input type="text" name="company_name" id=""><br><br>
+            
+            <label for="about">about</label><br>
+            <textarea name="about" id=""></textarea>
+
+            <label for="logo">logo</label><br>
+            <input type="file" name="logo" id=""><br><br>
+
+            <label for="location">location</label><br>
+            <input type="text" name="location" id=""><br><br>
+
+            <button type="submit">Countinue</button>
+        </form>
+{% endblock  %}

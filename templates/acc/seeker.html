@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "acc/reg.html" %}
 
-
-    {% block main %}
+{% block main %}
         <form action="{% url 'seek' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
@@ -32,6 +24,4 @@
 
             <button type="submit">Countinue</button>
         </form>
-    {% endblock  %}
-</body>
-</html>
+{% endblock  %}
