@@ -20,6 +20,8 @@
         {% if i.user.img %}
             <img width="300px" style="border-radius: 50%;" src="{{i.user.img.url}}" alt="{{i.user.username}}">
         {% endif %}
+
+        <a href="{% url 'my_jobs' i.id %}">My jobs</a>
     {% endfor %}
 </body>
 </html>

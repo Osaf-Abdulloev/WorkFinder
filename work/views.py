@@ -41,6 +41,13 @@ def create_job(request):
     return render(request, 'work/create_job.html', context={'job_types': Job.JOB_TYPE, 'c' : c, 'e' : e})
 
 
+def my_jobs(request, pk):
+    user = get_object_or_404(Emploeer, pk=pk)
+    jobs = user.job_set.all()
+    
+    return render(request, 'work/my_jobs.html', context={'j' : jobs})
+
+
 @permission_required('work.change_job', login_url='erorpage')
 def update_job(request, pk):
     job = get_object_or_404(Job, pk=pk)
@@ -63,6 +70,7 @@ def update_job(request, pk):
         job.save()
         return redirect('all_jobs')
     return render(request, 'work/update_job.html', context={'job_types': Job.JOB_TYPE, 'c' : c, 'e' : e, 'j' : j})
+
 
 @permission_required('work.delete_job', login_url='erorpage')
 def delete_job(request, pk):

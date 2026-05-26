@@ -6,10 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="{% url 'home' %}">home</a>
-    <form action="{% url 'search' %}" method="get">
-        <input type="text" name="q">
-    </form>
     {% for i in j %}
         <p>{{i.company.company_name}}</p>
         <p>{{i.title}}</p>
@@ -20,6 +16,11 @@
         <p>{{i.exp_req}}</p>
         <p>{{i.category.name}}</p>
         <p>{{i.created_at}}</p>
+
+        <div>
+            <a href="{% url 'update_job' i.id %}">Edit</a>
+            <a href="{% url 'delete_job' i.id %}">Delete</a>
+        </div>
     {% endfor %}
 </body>
 </html>
