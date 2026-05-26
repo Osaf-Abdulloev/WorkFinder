@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% for i in apl %}
+
+        <p>{{i.job.title}}</p>
+        <p>{{i.user.username}}</p>
+        <p>{{i.sms}}</p>
+        {% if i.resume %}
+            <a href="{{i.resume.url}}">Resume</a>
+        {% endif %}
+        <p>{{i.created_at}}</p>
+
+    {% endfor %}
+</body>
+</html>

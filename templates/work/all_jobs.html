@@ -12,6 +12,8 @@
     </form>
     {% for i in j %}
         <p>{{i.company.company_name}}</p>
+        <p>{{i.company.user.username}}</p>
+        <img src="{{i.company.logo.url}}" alt="">
         <p>{{i.title}}</p>
         <p>{{i.description}}</p>
         <p>{{i.sallary}}</p>

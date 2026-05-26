@@ -11,5 +11,6 @@ urlpatterns = [
     path('erorpage', views.erorpage, name='erorpage'),
     path('my_jobs/<int:pk>', views.my_jobs, name='my_jobs'),
     path('search/', views.search, name='search'),
-    path('aplicate/<int:pk>', views.aplicate, name='aplicate')
+    path('aplicate/<int:pk>', views.aplicate, name='aplicate'),
+    path('aplications/', views.aplications, name='aplications')
 ]

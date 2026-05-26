@@ -117,7 +117,13 @@ def aplicate(request, pk):
         )
         return redirect('all_jobs')
     return render(request, 'work/aplicate.html')
+
+
+def aplications(request):
+    user = request.user.emploeer
+    aplications = Application.objects.filter(job__company = user)
     
+    return render(request, 'work/aplications.html', context={'apl' : aplications})
     
     
     
