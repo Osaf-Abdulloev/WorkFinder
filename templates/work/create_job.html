@@ -6,10 +6,17 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{% url 'create_job' %}">
+    <form action="{% url 'create_job' %}" method="post">
         {% csrf_token %}
-        <label for="company">Company</label><br>
-        <input type="text" name="company" id=""><br><br>
+        <select name="company" required>
+            <option value="">Choose company</option>
+        
+            {% for i in e %}
+                <option value="{{ i.id }}">
+                    {{ i.company_name }}
+                </option>
+            {% endfor %}
+        </select><br><br>
         
         <label for="title">title</label><br>
         <input type="text" name="title" id=""><br><br>
@@ -31,7 +38,7 @@
                 </option>
 
             {% endfor %}
-        </select>
+        </select><br><br>
 
         <label for="exp_req">exp requaried (in year)</label><br>
         <input type="number" name="exp_req" id=""><br><br>
@@ -44,7 +51,9 @@
                     {{ i.name }}
                 </option>
             {% endfor %}
-        </select>
+        </select><br><br>
+
+        <button type="submit">Submit</button>
     </form>
 </body>
 </html>

@@ -12,7 +12,7 @@ def home(request):
 
 
 def all_jobs(request):
-    j = Job.objects.all()
+    j = Job.objects.select_related('company', 'category')
     
     return render(request, 'work/all_jobs.html', context={'j' : j})
 
@@ -20,11 +20,12 @@ def all_jobs(request):
 
 def create_job(request):
     
+    e = Emploeer.objects.all()
     c = Category.objects.all()
     
     if request.method == "POST":
         Job.objects.create(
-            company = request.POST.get('company'),
+            company_id = request.POST.get('company'),
             title = request.POST.get('title'),
             description = request.POST.get('description'),
             sallary = request.POST.get('sallary'),
@@ -34,4 +35,4 @@ def create_job(request):
             category_id = request.POST.get('category'),
         )
         return redirect('all_jobs')
-    return render(request, 'work/create_job.html', context={'job_types': Job.JOB_TYPE, 'c' : c})
+    return render(request, 'work/create_job.html', context={'job_types': Job.JOB_TYPE, 'c' : c, 'e' : e})
