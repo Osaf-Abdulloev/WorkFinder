@@ -2,5 +2,8 @@
 {% block main %}
     {% for i in us %}
         <p>{{i.username}}</p>
+        {% if i.img %}
+            <img width="200px" src="{{i.img.url}}" alt="">
+        {% endif %}
     {% endfor %}
 {% endblock  %}

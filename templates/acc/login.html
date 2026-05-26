@@ -12,6 +12,9 @@
         
         {% if eror %}
             <p>{{eror}}</p>
+            {% if eror == 'imvalid username or password' %}
+                <a href="{% url 'forget' %}">Forget password ?</a><br><br>
+            {% endif %}
         {% endif %}
         
         <button type="submit">Login</button>

@@ -4,6 +4,9 @@
     <form action="{% url 'newpas' %}" method="post">
         {% csrf_token %}
 
+        <label for="username">Your username</label><br>
+         <input type="text" name="username" id=""><br><br>
+
         <label for="p1">New password</label><br>
          <input type="text" name="p1" id=""><br><br>
         

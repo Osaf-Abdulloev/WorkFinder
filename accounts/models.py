@@ -24,7 +24,7 @@ class User(AbstractUser):
     age = models.PositiveIntegerField(null=True, blank=True)
     phone = models.CharField(max_length=13,null=True, blank=True)
     adress = models.CharField(max_length=30, null=True, blank=True)
-    img = models.ImageField(upload_to='users/', default='def.jpg',null=True, blank=True)
+    img = models.ImageField(upload_to='users/', default='users/def.jpg',null=True, blank=True)
     create_at = models.DateTimeField(auto_now_add=True)
     
     

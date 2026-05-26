@@ -172,7 +172,27 @@ def emailconf(request):
     return render(request, 'acc/emailconf.html')
 
 
-
+def newpas(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        p1 = request.POST.get('p1')
+        p2 = request.POST.get('p2')
+        
+        if p1!=p2:
+            return render(request, 'acc/newpas.html', context={'eror' : 'Password`s not equal'})
+        
+        user = User.objects.get(username = username)
+        
+        if not user:
+            return render(request, 'acc/newpas.html', context={'eror' : 'Wrong username!'})
+        
+        user.set_password(p1)
+        user.save()
+        
+        return redirect('login')
+    return render(request, 'acc/newpas.html')
+        
+        
 
 
 def emailconf2(request):
