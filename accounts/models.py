@@ -20,7 +20,7 @@ class User(AbstractUser):
         ('employer', 'Employer')
     ]
     
-    role = models.CharField(max_length=25,choices=role_choice, null=True, blank=True )
+    role = models.CharField(max_length=25, choices=role_choice, null=True, blank=True )
     age = models.PositiveIntegerField(null=True, blank=True)
     phone = models.CharField(max_length=13,null=True, blank=True)
     adress = models.CharField(max_length=30, null=True, blank=True)

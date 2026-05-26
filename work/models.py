@@ -38,4 +38,29 @@ class Category(models.Model):
     
     def __str__(self):
         return self.name
+    
+
+
+
+class Job(models.Model):
+    JOB_TYPE = [
+        ('full_time', 'Full time'),
+        ('part_time', 'Part time'),
+        ('freelance', 'Freelance')
+    ]
+    
+    company = models.ForeignKey(Emploeer, on_delete=models.CASCADE)
+    title = models.CharField(max_length=25)
+    description = models.TextField()
+    sallary = models.PositiveIntegerField()
+    location = models.CharField(max_length=50)
+    job_type = models.CharField(max_length=25, choices=JOB_TYPE)
+    exp_req = models.PositiveIntegerField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    
+    def __str__(self):
+        return self.title
+    
 
