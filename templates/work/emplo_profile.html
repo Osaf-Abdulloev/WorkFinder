@@ -8,6 +8,18 @@
 <body>
     {% for i in e %}
         <p>{{i.user.username}}</p>
+        <p>{{i.company_name}}</p>
+        <p>{{i.user.role}}</p>
+        <p>{{i.user.age}}</p>
+        <p>{{i.user.phone}}</p>
+        <p>{{i.user.adress}}</p>
+        <p>{{i.about}}</p>
+        <img width="300px" style="border-radius: 50%;" src="{{i.logo.url}}" alt="{{i.user.username}}">
+        <p>{{i.location}}</p>
+        <p>{{i.create_at}}</p>
+        {% if i.user.img %}
+            <img width="300px" style="border-radius: 50%;" src="{{i.user.img.url}}" alt="{{i.user.username}}">
+        {% endif %}
     {% endfor %}
 </body>
 </html>

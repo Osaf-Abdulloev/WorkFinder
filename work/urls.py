@@ -6,5 +6,6 @@ urlpatterns = [
     path('create_job/', views.create_job, name='create_job'),
     path('all_jobs/', views.all_jobs, name='all_jobs'),
     path('update_job/<int:pk>', views.update_job, name='update_job'),
-    path('seeker_profile/<int:pk>', views.seeker_profile, name='seeker_profile')
+    path('seeker_profile/<int:pk>', views.seeker_profile, name='seeker_profile'),
+    path('erorpage', views.erorpage, name='erorpage'),
 ]

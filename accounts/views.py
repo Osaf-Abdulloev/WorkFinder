@@ -297,6 +297,8 @@ def emp(request):
         logo = request.FILES.get('logo')
         location = request.POST.get('location')
         
+        
+        
         e = Emploeer.objects.create(
             user_id = user_id,
             company_name = company_name,

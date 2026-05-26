@@ -10,6 +10,9 @@ def home(request):
     return render(request, 'work/home.html', context={'us' : user})
 
 
+def erorpage(request):
+    return render(request, '403.html')
+
 
 def all_jobs(request):
     j = Job.objects.select_related('company', 'category')
@@ -17,7 +20,7 @@ def all_jobs(request):
     return render(request, 'work/all_jobs.html', context={'j' : j})
 
 
-@permission_required('work.add_job', login_url='all_jobs')
+@permission_required('work.add_job', login_url='erorpage')
 def create_job(request):
     
     e = Emploeer.objects.all()
@@ -37,7 +40,7 @@ def create_job(request):
         return redirect('all_jobs')
     return render(request, 'work/create_job.html', context={'job_types': Job.JOB_TYPE, 'c' : c, 'e' : e})
 
-@permission_required('work.change_job', login_url='all_jobs')
+@permission_required('work.change_job', login_url='erorpage')
 def update_job(request, pk):
     job = get_object_or_404(Job, pk=pk)
     
@@ -65,7 +68,7 @@ def update_job(request, pk):
 def seeker_profile(request, pk):
     user = get_object_or_404(User, pk=pk)
     seek = Seeker.objects.filter(user_id = user.id)
-    emplo = Emploeer.objects.filter(user_id = user.id)
+    emplo = Emploeer.objects.filter(user_id = user.id).select_related('user')
     
     if seek:
         return render(request, 'work/seeker_profile.html', context={'s' : seek})
