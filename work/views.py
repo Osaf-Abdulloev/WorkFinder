@@ -40,6 +40,7 @@ def create_job(request):
         return redirect('all_jobs')
     return render(request, 'work/create_job.html', context={'job_types': Job.JOB_TYPE, 'c' : c, 'e' : e})
 
+
 @permission_required('work.change_job', login_url='erorpage')
 def update_job(request, pk):
     job = get_object_or_404(Job, pk=pk)
@@ -63,6 +64,14 @@ def update_job(request, pk):
         return redirect('all_jobs')
     return render(request, 'work/update_job.html', context={'job_types': Job.JOB_TYPE, 'c' : c, 'e' : e, 'j' : j})
 
+@permission_required('work.delete_job', login_url='erorpage')
+def delete_job(request, pk):
+    job = get_object_or_404(Job, pk=pk)
+    
+    if request.method == "POST":
+        job.delete()
+        return redirect('all_jobs')
+    return render(request, 'work/delete_job.html', context={'j' : job})
 
 
 def seeker_profile(request, pk):
