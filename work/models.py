@@ -10,6 +10,7 @@ class Emploeer(models.Model):
     logo = models.ImageField(upload_to='companylogos/')
     location = models.CharField(max_length=50)
     create_at = models.DateTimeField(auto_now_add=True)
+    is_creat = models.BooleanField(default=False, null=True, blank=True)
     
     
     def __str__(self):
@@ -26,6 +27,7 @@ class Seeker(models.Model):
     edu = models.CharField(max_length=50)
     burth_date = models.DateField()
     adress = models.CharField(max_length=50)
+    is_creat = models.BooleanField(default=False, null=True, blank=True)
     
     
     def __str__(self):

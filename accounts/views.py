@@ -240,6 +240,18 @@ def login_us(request):
         
         login(request, user)
         
+        isc = Seeker.objects.filter(user = request.user, is_creat = True).first()
+        
+        if isc:
+            return redirect('/')
+        
+        
+        emppp = Emploeer.objects.filter(user = request.user, is_creat = True).first()
+        
+        if emppp:
+            return redirect('/')
+        
+        
         isseek = User.objects.filter(username = username, role = 'seeker').first()
         
         if isseek:
@@ -259,7 +271,7 @@ def seek(request):
         burth_date = request.POST.get('burth_date')
         adress = request.POST.get('adress')
         
-        Seeker.objects.create(
+        s = Seeker.objects.create(
             user_id = user_id,
             bio = bio,
             resume = resume,
@@ -268,6 +280,10 @@ def seek(request):
             burth_date = burth_date,
             adress = adress,
         )
+        
+        s.is_creat = True
+        s.save()
+        
         
         return redirect('/')
     return render(request, 'acc/seeker.html')
@@ -281,13 +297,16 @@ def emp(request):
         logo = request.FILES.get('logo')
         location = request.POST.get('location')
         
-        Emploeer.objects.create(
+        e = Emploeer.objects.create(
             user_id = user_id,
             company_name = company_name,
             about = about,
             logo = logo,
             location = location
         )
+        
+        e.is_creat = True
+        e.save()
         
         return redirect('/')
     return render(request, 'acc/emp.html')
