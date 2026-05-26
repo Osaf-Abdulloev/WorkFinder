@@ -79,5 +79,17 @@ class Application(models.Model):
         return self.job.title
     
     
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    
+    def __str__(self):
+        return f'{self.user.username} || {self.job.title}'
+    
+    
     
 

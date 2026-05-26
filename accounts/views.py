@@ -6,6 +6,7 @@ from .models import EmailConfirm
 from django.core.mail import send_mail
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
+from django.contrib.auth.models import Group
 
 # Create your views here.
 
@@ -135,15 +136,19 @@ def register(request):
         user = User.objects.create_user(
             username=username,
             password=pas1,
-            role=role,
             email=email,
-            age = age,
-            phone = phone,
-            adress = adress,
-            img = img)
-        
+            role=role,
+            age=age,
+            phone=phone,
+            adress=adress,
+            img=img
+        )
+
         user.is_active = False
         user.save()
+        
+        group = Group.objects.get(name=role)
+        user.groups.add(group)
         
         sendcode(user)
         return redirect('emailconf')
