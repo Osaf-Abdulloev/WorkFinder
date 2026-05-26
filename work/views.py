@@ -71,7 +71,10 @@ def seeker_profile(request, pk):
         return render(request, 'work/seeker_profile.html', context={'s' : seek})
     
     if emplo:
-        return render(request, 'work/emplo_profile.html', context={'s' : seek})
+        return render(request, 'work/emplo_profile.html', context={'e' : emplo})
+
+
+    
     
     
     
