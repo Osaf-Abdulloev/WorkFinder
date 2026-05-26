@@ -11,6 +11,10 @@ def home(request):
 
 
 
+def all_jobs(request):
+    j = Job.objects.all()
+    
+    return render(request, 'work/all_jobs.html', context={'j' : j})
 
 
 
