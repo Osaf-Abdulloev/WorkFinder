@@ -124,6 +124,13 @@ def aplications(request):
     aplications = Application.objects.filter(job__company = user)
     
     return render(request, 'work/aplications.html', context={'apl' : aplications})
+
+
+def aplicationss(request):
+    user = request.user
+    aplications = Application.objects.filter(user = user)
+    
+    return render(request, 'work/aplications.html', context={'apl' : aplications})
     
     
     
