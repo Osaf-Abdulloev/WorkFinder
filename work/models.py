@@ -22,7 +22,7 @@ class Emploeer(models.Model):
 class Seeker(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='seekerprogile')
     bio = models.TextField()
-    resume = models.FileField(upload_to='resumes/')
+    resume = models.FileField(upload_to='resumes/', blank=True, null=True)
     exp = models.PositiveIntegerField()
     edu = models.CharField(max_length=50)
     burth_date = models.DateField()
@@ -71,7 +71,7 @@ class Application(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='applications')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     sms = models.TextField()
-    resume = models.FileField(upload_to='resumes/')
+    resume = models.FileField(upload_to='resumes/', blank=True, null=True)
     status = models.CharField(max_length=25)
     created_at = models.DateTimeField(auto_now_add=True)
     

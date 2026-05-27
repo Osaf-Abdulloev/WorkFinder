@@ -14,5 +14,6 @@ urlpatterns = [
     path('aplicate/<int:pk>', views.aplicate, name='aplicate'),
     path('aplications/', views.aplications, name='aplications'),
     path('aplicationss/', views.aplicationss, name='aplicationss'),
-    path('update_app/<int:pk>', views.update_app, name='update_app')
+    path('update_app/<int:pk>', views.update_app, name='update_app'),
+    path('delete_app/<int:pk>', views.delete_app, name='delete_app')
 ]

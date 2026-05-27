@@ -7,15 +7,18 @@
 </head>
 <body>
     {% for i in apl %}
+        <p>{{ i.job.title }}</p>
+        <p>{{ i.user.username }}</p>
+        <p>{{ i.sms }}</p>
 
-        <p>{{i.job.title}}</p>
-        <p>{{i.user.username}}</p>
-        <p>{{i.sms}}</p>
-        {% if i.resume %}
-            <a href="{{ i.resume.url }}">Resume</a>
+        {% if i.resume and i.resume.name %}
+            <a href="{{ i.resume.url }}" target="_blank">Резюме</a>
+        {% else %}
+            <p>Резюме не прикреплено</p>
         {% endif %}
-        <p>{{i.status}}</p>
-        <p>{{i.created_at}}</p>
+
+        <p>{{ i.status }}</p>
+        <p>{{ i.created_at }}</p>
     {% endfor %}
 </body>
 </html>

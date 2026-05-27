@@ -147,6 +147,12 @@ def update_app(request, pk):
     return render(request, 'work/update_app.html', context={'app' : app})
     
     
-
+def delete_app(request, pk):
+    app = get_object_or_404(Application, pk=pk)
+    
+    if request.method == "POST":
+        app.delete()
+        return redirect('/')
+    return render(request, 'work/delete_app.html')
     
 

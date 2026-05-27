@@ -18,8 +18,11 @@
         <p>{{i.location}}</p>
         <p>{{i.create_at}}</p>
         {% if i.user.img %}
-            <img width="300px" style="border-radius: 50%;" src="{{i.user.img.url}}" alt="{{i.user.username}}">
+            <img width="300px" style="border-radius: 50%;" src="{{ i.user.img.url }}" alt="">
+        {% else %}
+            <img width="300px" style="border-radius: 50%;" src="/media/users/def.jpg" alt="">
         {% endif %}
+        
 
         <a href="{% url 'my_jobs' i.id %}">My jobs</a>
         <a href="{% url 'aplications' %}">Aplications</a>
