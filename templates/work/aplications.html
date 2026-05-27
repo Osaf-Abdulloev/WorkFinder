@@ -19,6 +19,8 @@
 
         <p>{{ i.status }}</p>
         <p>{{ i.created_at }}</p>
+        <a href="{% url 'seeker_profile' i.user.id %}">Profile</a>
+        <a href="{%%}"></a>
     {% endfor %}
 </body>
 </html>

@@ -134,19 +134,21 @@ def aplicationss(request):
 
 
 
-
+@permission_required('work.add_application', login_url='erorpage')
 def update_app(request, pk):
     app = get_object_or_404(Application, pk=pk)
     
     if request.method == "POST":
-        app.sms = request.POST.get('sms')
-        app.resume = request.FILES.get('resume')
+        if request.POST.get('sms'):
+            app.sms = request.POST.get('sms')
+        if request.FILES.get('resume'):
+            app.resume = request.FILES.get('resume')
         
         app.save()
         return redirect('/')
     return render(request, 'work/update_app.html', context={'app' : app})
     
-    
+@permission_required('work.add_application', login_url='erorpage')
 def delete_app(request, pk):
     app = get_object_or_404(Application, pk=pk)
     
