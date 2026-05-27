@@ -181,7 +181,8 @@ def update_profile(request, pk):
             seeker.bio = request.POST.get('bio')
             seeker.exp = request.POST.get('exp')
             seeker.edu = request.POST.get('edu')
-            seeker.burth_date = request.POST.get('burth_date')
+            if request.POST.get('burth_date'):
+                seeker.burth_date = request.POST.get('burth_date')
             seeker.adress = request.POST.get('adress')
 
             if request.FILES.get('resume'):

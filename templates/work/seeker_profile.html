@@ -16,14 +16,13 @@
         <p>{{i.user.role}}</p>
         <p>{{i.user.age}}</p>
         <p>{{i.user.phone}}</p>
-        <a href="{% url 'update_profile' i.id %}">update_profile</a>
+        <a href="{% url 'update_profile' request.user.id %}">update_profile</a>
         {% if i.user.img %}
             <img width="300px" style="border-radius: 50%;" src="{{ i.user.img.url }}" alt="">
         {% else %}
             <img width="300px" style="border-radius: 50%;" src="/media/users/def.jpg" alt="">
         {% endif %}
         <a href="{% url 'aplicationss' %}">Aplications</a>
-        <a href="{% url 'update_profile' i.id %}">update_profile</a>
     {% endfor %}
 </body>
 </html>
