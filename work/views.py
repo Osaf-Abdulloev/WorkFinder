@@ -130,9 +130,23 @@ def aplicationss(request):
     user = request.user
     aplications = Application.objects.filter(user = user)
     
-    return render(request, 'work/aplications.html', context={'apl' : aplications})
+    return render(request, 'work/aplicationss.html', context={'apl' : aplications})
+
+
+
+
+def update_app(request, pk):
+    app = get_object_or_404(Application, pk=pk)
+    
+    if request.method == "POST":
+        app.sms = request.POST.get('sms')
+        app.resume = request.FILES.get('resume')
+        
+        app.save()
+        return redirect('/')
+    return render(request, 'work/update_app.html', context={'app' : app})
     
     
-    
+
     
 

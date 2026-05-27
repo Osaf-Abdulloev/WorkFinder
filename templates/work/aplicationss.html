@@ -16,6 +16,10 @@
         {% endif %}
         <p>{{i.status}}</p>
         <p>{{i.created_at}}</p>
+
+        <div>
+            <a href="{% url 'update_app' i.id %}">Update</a>
+        </div>
     {% endfor %}
 </body>
 </html>
