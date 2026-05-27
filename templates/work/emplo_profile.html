@@ -17,6 +17,7 @@
         <img width="300px" style="border-radius: 50%;" src="{{i.logo.url}}" alt="{{i.user.username}}">
         <p>{{i.location}}</p>
         <p>{{i.create_at}}</p>
+        <a href="{% url 'update_profile' request.user.id %}">update_profile</a>
         {% if i.user.img %}
             <img width="300px" style="border-radius: 50%;" src="{{ i.user.img.url }}" alt="">
         {% else %}

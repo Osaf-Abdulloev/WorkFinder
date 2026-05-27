@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <input name="username" value="{{ user.username }}"><br><br>
+        <input name="email" value="{{ user.email }}"><br><br>
+        <input name="phone" value="{{ user.phone }}"><br><br>
+        <input name="age" value="{{ user.age }}"><br><br>
+        <input name="adress" value="{{ user.adress }}"><br><br>
+
+        <input type="file" name="img"><br><br>
+
+        {% if seeker %}
+            <textarea name="bio">{{ seeker.bio }}</textarea><br><br>
+            <input name="exp" value="{{ seeker.exp }}"><br><br>
+            <input name="edu" value="{{ seeker.edu }}"><br><br>
+            <input type="date" name="burth_date" value="{{ seeker.burth_date }}"><br><br>
+            <input type="file" name="resume"><br><br>
+        {% endif %}
+
+        {% if employer %}
+            <input name="company_name" value="{{ employer.company_name }}"><br><br>
+            <textarea name="about">{{ employer.about }}</textarea><br><br>
+            <input name="location" value="{{ employer.location }}"><br><br>
+            <input type="file" name="logo"><br><br>
+        {% endif %}
+
+        <button type="submit">Update</button>
+    </form>
+</body>
+
+</html>

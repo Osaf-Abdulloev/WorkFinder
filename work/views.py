@@ -91,7 +91,7 @@ def delete_job(request, pk):
     return render(request, 'work/delete_job.html', context={'j' : job})
 
 
-def seeker_profile(request, pk):
+def profile(request, pk):
     user = get_object_or_404(User, pk=pk)
     seek = Seeker.objects.filter(user_id = user.id)
     emplo = Emploeer.objects.filter(user_id = user.id).select_related('user')
@@ -158,3 +158,47 @@ def delete_app(request, pk):
     return render(request, 'work/delete_app.html')
     
 
+def update_profile(request, pk):
+    user = get_object_or_404(User, pk=pk)
+
+    seeker = Seeker.objects.filter(user=user).first()
+    employer = Emploeer.objects.filter(user=user).first()
+
+    if request.method == "POST":
+        user.username = request.POST.get('username')
+        user.email = request.POST.get('email')
+        user.phone = request.POST.get('phone')
+        user.age = request.POST.get('age')
+        user.adress = request.POST.get('adress')
+
+        if request.FILES.get('img'):
+            user.img = request.FILES.get('img')
+
+        user.save()
+
+
+        if seeker:
+            seeker.bio = request.POST.get('bio')
+            seeker.exp = request.POST.get('exp')
+            seeker.edu = request.POST.get('edu')
+            seeker.burth_date = request.POST.get('burth_date')
+            seeker.adress = request.POST.get('adress')
+
+            if request.FILES.get('resume'):
+                seeker.resume = request.FILES.get('resume')
+
+            seeker.save()
+
+        if employer:
+            employer.company_name = request.POST.get('company_name')
+            employer.about = request.POST.get('about')
+            employer.location = request.POST.get('location')
+
+            if request.FILES.get('logo'):
+                employer.logo = request.FILES.get('logo')
+
+            employer.save()
+
+        return redirect('profile', pk=user.pk)
+
+    return render(request, 'work/update_profile.html', context = {'user': user,'seeker': seeker,'employer': employer})
