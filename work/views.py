@@ -203,3 +203,11 @@ def update_profile(request, pk):
         return redirect('profile', pk=user.pk)
 
     return render(request, 'work/update_profile.html', context = {'user': user,'seeker': seeker,'employer': employer})
+
+
+
+@login_required(login_url="login")
+def saved_jobs(request):
+    favorites = Favorite.objects.filter(user=request.user).select_related("job", "job__company", "job__category")
+    return render(request, "work/saved_jobs.html", {"favorites": favorites})
+

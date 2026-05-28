@@ -17,4 +17,5 @@ urlpatterns = [
     path('update_app/<int:pk>', views.update_app, name='update_app'),
     path('delete_app/<int:pk>', views.delete_app, name='delete_app'),
     path('update_profile/<int:pk>', views.update_profile, name='update_profile'),
+    path('saved_jobs/', views.saved_jobs, name='saved_jobs'),
 ]
