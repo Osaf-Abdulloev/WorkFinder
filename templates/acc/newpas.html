@@ -1,22 +1,22 @@
 {% extends "acc/reg.html" %}
 
 {% block main %}
+<section class="card">
+    <h1 class="title">Set New Password</h1>
     <form action="{% url 'newpas' %}" method="post">
         {% csrf_token %}
-
-        <label for="username">Your username</label><br>
-         <input type="text" name="username" id=""><br><br>
-
-        <label for="p1">New password</label><br>
-         <input type="text" name="p1" id=""><br><br>
-        
-        <label for="p2">Try password</label><br>
-         <input type="text" name="p2" id=""><br><br>
-        
+        <label>Your username</label>
+        <input type="text" name="username">
+        <label>New password</label>
+        <input type="password" name="p1">
+        <label>Repeat password</label>
+        <input type="password" name="p2">
         {% if eror %}
-            <p>{{eror}}</p>
+            <p style="color:#ff9ea7">{{eror}}</p>
         {% endif %}
-        
-        <button type="submit">Save</button>
+        <div class="form-actions">
+            <button class="btn" type="submit">Save Password</button>
+        </div>
     </form>
+</section>
 {% endblock %}
