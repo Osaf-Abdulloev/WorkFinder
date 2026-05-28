@@ -57,11 +57,7 @@ def all_jobs(request):
     if request.user.is_authenticated:
         favorite_ids = list(Favorite.objects.filter(user=request.user).values_list("job_id", flat=True))
 
-    return render(
-        request,
-        "work/all_jobs.html",
-        context={"j": jobs,"categories": Category.objects.order_by("name"),"job_types": Job.JOB_TYPE,"favorite_ids": favorite_ids,"q": q,"selected_category": category,"selected_job_type": job_type,},
-    )
+    return render(request,"work/all_jobs.html",context={"j": jobs,"categories": Category.objects.order_by("name"),"job_types": Job.JOB_TYPE,"favorite_ids": favorite_ids,"q": q,"selected_category": category,"selected_job_type": job_type,})
 
 
 @permission_required('work.add_job', login_url='erorpage')
@@ -267,12 +263,18 @@ def delete_favorite(request, pk):
 
 
 
-client = Groq(api_key="API KEY")
+client = Groq(api_key="")
 
 @login_required(login_url="login")
 def ai_assistant(request):
     answer = ""
     question = ""
+
+
+    jobs = Job.objects.all().order_by("-id")[:10]
+
+    context = "\n".join([
+        f"Title: {job.title}\nDescription: {job.description}\nCompany: {job.company.company_name}"for job in jobs])
 
     if request.method == "POST":
         question = request.POST.get("q", "").strip()
@@ -284,8 +286,10 @@ def ai_assistant(request):
                         {
                             "role": "system",
                             "content": (
-                                "You are an AI career assistant for WorkFinder website. "
-                                "Help users with resumes, interviews, jobs, and career advice."
+                                "You are an AI career assistant for WorkFinder website.\n"
+                                "You help users find jobs, understand requirements, and give career advice.\n\n"
+                                "Use ONLY the following database information when relevant:\n\n"
+                                f"{context}"
                             )
                         },
                         {
@@ -303,7 +307,10 @@ def ai_assistant(request):
             except Exception as e:
                 answer = f"AI Error: {str(e)}"
 
-    return render(request,"work/ai_assistant.html",{"answer": answer,"question": question})
+    return render(request, "work/ai_assistant.html", {
+        "answer": answer,
+        "question": question
+    })
 
 
 @login_required(login_url="login")
