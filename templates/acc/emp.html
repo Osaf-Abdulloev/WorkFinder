@@ -1,21 +1,21 @@
 {% extends "acc/reg.html" %}
 
 {% block main %}
-        <form action="{% url 'emp' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-
-            <label for="company_name">company_name</label><br>
-            <input type="text" name="company_name" id=""><br><br>
-            
-            <label for="about">about</label><br>
-            <textarea name="about" id=""></textarea>
-
-            <label for="logo">logo</label><br>
-            <input type="file" name="logo" id=""><br><br>
-
-            <label for="location">location</label><br>
-            <input type="text" name="location" id=""><br><br>
-
-            <button type="submit">Countinue</button>
-        </form>
+<section class="card">
+    <h1 class="title">Complete Employer Profile</h1>
+    <form action="{% url 'emp' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Company Name</label>
+        <input type="text" name="company_name">
+        <label>About Company</label>
+        <textarea name="about"></textarea>
+        <label>Company Logo</label>
+        <input type="file" name="logo">
+        <label>Location</label>
+        <input type="text" name="location">
+        <div class="form-actions">
+            <button class="btn" type="submit">Continue</button>
+        </div>
+    </form>
+</section>
 {% endblock  %}
