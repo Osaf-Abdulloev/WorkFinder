@@ -1,19 +1,20 @@
 {% extends "acc/reg.html" %}
 
 {% block main %}
+<section class="card">
+    <h1 class="title">Email Confirmation</h1>
     <form action="{% url 'emailconf' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-
-        <label for="username">Username</label><br>
-         <input type="text" name="username" id=""><br><br>
-        
-        <label for="code">Code from gmail</label><br>
-         <input type="text" name="code" id=""><br><br>
-        
+        <label>Username</label>
+        <input type="text" name="username">
+        <label>Code from email</label>
+        <input type="text" name="code">
         {% if eror %}
-            <p>{{eror}}</p>
+            <p style="color:#ff9ea7">{{eror}}</p>
         {% endif %}
-        
-        <button type="submit">Confirm</button>
+        <div class="form-actions">
+            <button class="btn" type="submit">Confirm</button>
+        </div>
     </form>
+</section>
 {% endblock %}
