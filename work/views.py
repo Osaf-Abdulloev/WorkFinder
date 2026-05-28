@@ -211,3 +211,15 @@ def saved_jobs(request):
     favorites = Favorite.objects.filter(user=request.user).select_related("job", "job__company", "job__category")
     return render(request, "work/saved_jobs.html", {"favorites": favorites})
 
+
+
+@login_required(login_url="login")
+def delete_favorite(request, pk):
+    job = get_object_or_404(Job, pk=pk)
+    fav = Favorite.objects.filter(user=request.user, job=job).first()
+    if fav:
+        fav.delete()
+    else:
+        Favorite.objects.create(user=request.user, job=job)
+    return redirect(request.META.get("HTTP_REFERER", "all_jobs"))
+
