@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="" method="post">
+{% extends "base.html" %}
+{% block title %}Delete Job | WorkFinder{% endblock %}
+{% block main %}
+<section class="card">
+    <h1 class="title">Delete Job</h1>
+    <p>Are you sure you want to delete <strong>"{{j.title}}"</strong>?</p>
+    <form action="" method="post" class="form-actions">
         {% csrf_token %}
-        <button type="submit">Do you want delete - "{{j.title}}" ?</button>
-        <a href="{% url 'all_jobs' %}">Cancel</a>
+        <button class="btn" type="submit">Yes, Delete</button>
+        <a class="btn btn-outline" href="{% url 'all_jobs' %}">Cancel</a>
     </form>
-</body>
-</html>
+</section>
+{% endblock %}
