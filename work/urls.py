@@ -20,4 +20,5 @@ urlpatterns = [
     path('saved_jobs/', views.saved_jobs, name='saved_jobs'),
     path('delete_favorite/<int:pk>', views.delete_favorite, name='delete_favorite'),
     path('ai_assistant/', views.ai_assistant, name='ai_assistant'),
+    path('application_action/<int:pk>/<str:action>/', views.application_action, name='application_action'),
 ]

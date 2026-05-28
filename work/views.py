@@ -263,3 +263,20 @@ def ai_assistant(request):
                 answer = f"AI Error: {str(e)}"
 
     return render(request,"work/ai_assistant.html",{"answer": answer,"question": question})
+
+
+@login_required(login_url="login")
+def application_action(request, pk, action):
+    app = get_object_or_404(Application, pk=pk)
+    if not hasattr(request.user, "emploeer") or app.job.company_id != request.user.emploeer.id:
+        return redirect("erorpage")
+
+    if action == "approve":
+        app.status = "Approved"
+    elif action == "reject":
+        app.status = "Rejected"
+    elif action == "cancel":
+        app.status = "Cancelled"
+    app.save()
+    return redirect("aplications")
+
