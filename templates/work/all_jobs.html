@@ -1,31 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <a href="{% url 'home' %}">home</a>
-    <form action="{% url 'search' %}" method="get">
-        <input type="text" name="q">
-    </form>
-    {% for i in j %}
-        <p>{{i.company.company_name}}</p>
-        <p>{{i.company.user.username}}</p>
-        <img width="200px" src="{{i.company.logo.url}}" alt="">
-        <p>{{i.title}}</p>
-        <p>{{i.description}}</p>
-        <p>{{i.sallary}}</p>
-        <p>{{i.location}}</p>
-        <p>{{i.job_type}}</p>
-        <p>{{i.exp_req}}</p>
-        <p>{{i.category.name}}</p>
-        <p>{{i.created_at}}</p>
+{% extends "base.html" %}
+{% block title %}Jobs | WorkFinder{% endblock %}
+{% block main %}
+<h1 class="title">All Jobs</h1>
+<p class="subtitle">Search, filter, save, and apply with a cleaner workflow.</p>
 
-        <div>
-            <a href="{% url 'aplicate' i.id %}">Aplicate</a>
-        </div>
+<form action="{% url 'all_jobs' %}" method="get" class="card grid grid-3">
+    <input type="text" name="q" value="{{ q }}" placeholder="Search by title, company, category, location">
+    <select name="category">
+        <option value="">All categories</option>
+        {% for c in categories %}
+            <option value="{{ c.id }}" {% if selected_category == c.id|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>
+        {% endfor %}
+    </select>
+    <select name="job_type">
+        <option value="">All job types</option>
+        {% for value, name in job_types %}
+            <option value="{{ value }}" {% if selected_job_type == value %}selected{% endif %}>{{ name }}</option>
+        {% endfor %}
+    </select>
+    <div class="form-actions">
+        <button class="btn" type="submit">Apply Filters</button>
+        <a class="btn btn-outline" href="{% url 'all_jobs' %}">Reset</a>
+    </div>
+</form>
+
+<section class="job-list" style="margin-top:16px;">
+    {% for i in j %}
+        <article class="card job-card">
+            <div class="between">
+                <div>
+                    <h3 style="margin:0;">{{ i.title }}</h3>
+                    <p class="muted" style="margin:6px 0;">{{ i.company.company_name }} • {{ i.location }}</p>
+                </div>
+                <span class="chip">{{ i.job_type }}</span>
+            </div>
+            <p>{{ i.description }}</p>
+            <div class="row muted">
+                <span>Salary: {{ i.sallary }}$</span>
+                <span>Experience: {{ i.exp_req }} year(s)</span>
+                <span>Category: {{ i.category.name }}</span>
+                <span>Posted: {{ i.created_at }}</span>
+            </div>
+            <div class="form-actions">
+                <a class="btn" href="{% url 'aplicate' i.id %}">Apply</a>
+                {% if request.user.is_authenticated %}
+                    <a class="btn btn-outline" href="{% url 'toggle_favorite' i.id %}">
+                        {% if i.id in favorite_ids %}Unsave{% else %}Save{% endif %}
+                    </a>
+                {% endif %}
+            </div>
+        </article>
+    {% empty %}
+        <article class="card"><p class="muted">No jobs found with current filters.</p></article>
     {% endfor %}
-</body>
-</html>
+</section>
+{% endblock %}
