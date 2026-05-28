@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from accounts.models import User
 from .models import *
 from django.contrib.auth.decorators import permission_required, login_required
-from django.db.models import Q
+from django.db.models import Q, Count
+from groq import Groq
 # Create your views here.
 
 def home(request):
@@ -223,3 +224,42 @@ def delete_favorite(request, pk):
         Favorite.objects.create(user=request.user, job=job)
     return redirect(request.META.get("HTTP_REFERER", "all_jobs"))
 
+
+
+client = Groq(api_key="API KEY")
+
+@login_required(login_url="login")
+def ai_assistant(request):
+    answer = ""
+    question = ""
+
+    if request.method == "POST":
+        question = request.POST.get("q", "").strip()
+
+        if question:
+            try:
+                chat_completion = client.chat.completions.create(
+                    messages=[
+                        {
+                            "role": "system",
+                            "content": (
+                                "You are an AI career assistant for WorkFinder website. "
+                                "Help users with resumes, interviews, jobs, and career advice."
+                            )
+                        },
+                        {
+                            "role": "user",
+                            "content": question
+                        }
+                    ],
+                    model="llama-3.3-70b-versatile",
+                    temperature=0.7,
+                    max_tokens=500
+                )
+
+                answer = chat_completion.choices[0].message.content
+
+            except Exception as e:
+                answer = f"AI Error: {str(e)}"
+
+    return render(request,"work/ai_assistant.html",{"answer": answer,"question": question})
