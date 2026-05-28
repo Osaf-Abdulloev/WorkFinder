@@ -1,27 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}My Jobs | WorkFinder{% endblock %}
+{% block main %}
+<h1 class="title">My Posted Jobs</h1>
+<section class="job-list">
     {% for i in j %}
-        <p>{{i.company.company_name}}</p>
-        <p>{{i.title}}</p>
-        <img width="200px" src="{{i.company.logo.url}}" alt="">
-        <p>{{i.description}}</p>
-        <p>{{i.sallary}}</p>
-        <p>{{i.location}}</p>
-        <p>{{i.job_type}}</p>
-        <p>{{i.exp_req}}</p>
-        <p>{{i.category.name}}</p>
-        <p>{{i.created_at}}</p>
-
-        <div>
-            <a href="{% url 'update_job' i.id %}">Edit</a>
-            <a href="{% url 'delete_job' i.id %}">Delete</a>
-        </div>
+        <article class="card">
+            <div class="between">
+                <div>
+                    <h3 style="margin:0;">{{i.title}}</h3>
+                    <p class="muted">{{i.company.company_name}} • {{i.location}}</p>
+                </div>
+                <span class="chip">{{i.job_type}}</span>
+            </div>
+            <p>{{i.description}}</p>
+            <p class="muted">Salary {{i.sallary}}$ • Exp {{i.exp_req}} years • {{i.category.name}}</p>
+            <div class="form-actions">
+                <a class="btn btn-outline" href="{% url 'update_job' i.id %}">Edit</a>
+                <a class="btn btn-outline" href="{% url 'delete_job' i.id %}">Delete</a>
+            </div>
+        </article>
+    {% empty %}
+        <article class="card"><p class="muted">No jobs posted yet.</p></article>
     {% endfor %}
-</body>
-</html>
+</section>
+{% endblock %}
