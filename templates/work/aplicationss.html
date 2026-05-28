@@ -1,28 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}My Applications | WorkFinder{% endblock %}
+{% block main %}
+<h1 class="title">My Applications</h1>
+<section class="job-list">
     {% for i in apl %}
-
-        <p>{{i.job.title}}</p>
-        <p>{{i.user.username}}</p>
-        <p>{{i.sms}}</p>
-        {% if i.resume and i.resume.name %}
-            <a href="{{ i.resume.url }}" target="_blank">Резюме</a>
-        {% else %}
-            <p>Резюме не прикреплено</p>
-        {% endif %}
-        <p>{{i.status}}</p>
-        <p>{{i.created_at}}</p>
-
-        <div>
-            <a href="{% url 'update_app' i.id %}">Update</a>
-            <a href="{% url 'delete_app' i.id %}">Cansel sended</a>
-        </div>
+        <article class="card">
+            <div class="between">
+                <div>
+                    <h3 style="margin:0;">{{i.job.title}}</h3>
+                    <p class="muted">{{ i.job.company.company_name }} • {{i.created_at}}</p>
+                </div>
+                <strong class="status-{{ i.status }}">{{i.status}}</strong>
+            </div>
+            <p>{{i.sms}}</p>
+            <div class="row">
+                {% if i.resume and i.resume.name %}
+                    <a class="btn btn-outline" href="{{ i.resume.url }}" target="_blank">Resume</a>
+                {% else %}
+                    <span class="muted">No resume attached</span>
+                {% endif %}
+                <a class="btn btn-outline" href="{% url 'update_app' i.id %}">Update</a>
+                <a class="btn btn-outline" href="{% url 'delete_app' i.id %}">Cancel Application</a>
+            </div>
+        </article>
+    {% empty %}
+        <article class="card"><p class="muted">You have not applied yet.</p></article>
     {% endfor %}
-</body>
-</html>
+</section>
+{% endblock %}
