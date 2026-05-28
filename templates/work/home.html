@@ -1,3 +1,66 @@
 {% extends "base.html" %}
+{% block title %}Home | WorkFinder{% endblock %}
 {% block main %}
+<section class="hero">
+    <h1 class="title">Find the right job or the right worker</h1>
+    <p class="subtitle">A modern marketplace for employers and seekers with smart matching and AI-ready workflows.</p>
+    <form action="{% url 'all_jobs' %}" method="get" class="grid grid-3">
+        <input type="text" name="q" placeholder="Search role, skill, company or city">
+        <button class="btn" type="submit">Search Jobs</button>
+        {% if request.user.is_authenticated %}
+            <a class="btn btn-outline" href="{% url 'ai_assistant' %}">Open AI Assistant</a>
+        {% else %}
+            <a class="btn btn-outline" href="{% url 'register' %}">Create Account</a>
+        {% endif %}
+    </form>
+</section>
+
+<section class="grid grid-2">
+    <article class="card">
+        <h3>AI Recommendations</h3>
+        <p class="muted">Based on user activity and profile signals. API-ready integration included.</p>
+        <div class="job-list">
+            {% for job in recommended_jobs %}
+                <div class="between">
+                    <div>
+                        <strong>{{ job.title }}</strong>
+                        <p class="muted">{{ job.company.company_name }} • {{ job.location }}</p>
+                    </div>
+                    <a class="btn btn-outline" href="{% url 'aplicate' job.id %}">Apply</a>
+                </div>
+            {% empty %}
+                <p class="muted">No recommendations yet.</p>
+            {% endfor %}
+        </div>
+    </article>
+
+    <article class="card">
+        <h3>Latest Jobs</h3>
+        <p class="muted">Recently posted opportunities.</p>
+        <div class="job-list">
+            {% for job in latest_jobs %}
+                <div class="between">
+                    <div>
+                        <strong>{{ job.title }}</strong>
+                        <p class="muted">{{ job.category.name }} • {{ job.sallary }}$</p>
+                    </div>
+                    <span class="chip">{{ job.job_type }}</span>
+                </div>
+            {% empty %}
+                <p class="muted">No jobs published yet.</p>
+            {% endfor %}
+        </div>
+    </article>
+</section>
+
+<section class="card" style="margin-top:16px;">
+    <h3>Categories</h3>
+    <div class="row" style="margin-top:8px;">
+        {% for c in categories %}
+            <a class="chip" href="{% url 'all_jobs' %}?category={{ c.id }}">{{ c.name }} ({{ c.job_count }})</a>
+        {% empty %}
+            <p class="muted">No categories yet.</p>
+        {% endfor %}
+    </div>
+</section>
 {% endblock main %}
