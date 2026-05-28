@@ -1,28 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {% for i in s %}
-        <p>{{i.user.username}}</p>
-        <p>{{i.bio}}</p>
-        <a href="{{i.resume.url}}">Resume</a>
-        <p>{{i.exp}}</p>
-        <p>{{i.edu}}</p>
-        <p>{{i.adress}}</p>
-        <p>{{i.user.role}}</p>
-        <p>{{i.user.age}}</p>
-        <p>{{i.user.phone}}</p>
-        <a href="{% url 'update_profile' request.user.id %}">update_profile</a>
-        {% if i.user.img %}
-            <img width="300px" style="border-radius: 50%;" src="{{ i.user.img.url }}" alt="">
-        {% else %}
-            <img width="300px" style="border-radius: 50%;" src="/media/users/def.jpg" alt="">
-        {% endif %}
-        <a href="{% url 'aplicationss' %}">Aplications</a>
-    {% endfor %}
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Seeker Profile | WorkFinder{% endblock %}
+{% block main %}
+{% for i in s %}
+    <section class="card">
+        <h1 class="title">{{i.user.username}}</h1>
+        <p class="subtitle">{{i.bio}}</p>
+        <div class="grid grid-2">
+            <div>
+                <p><strong>Role:</strong> {{i.user.role}}</p>
+                <p><strong>Experience:</strong> {{i.exp}} years</p>
+                <p><strong>Education:</strong> {{i.edu}}</p>
+                <p><strong>Address:</strong> {{i.adress}}</p>
+                <p><strong>Phone:</strong> {{i.user.phone}}</p>
+                {% if i.resume %}
+                    <a class="btn btn-outline" href="{{i.resume.url}}">Open Resume</a>
+                {% endif %}
+            </div>
+            <div>
+                {% if i.user.img %}
+                    <img width="220" style="border-radius:16px;" src="{{ i.user.img.url }}" alt="">
+                {% else %}
+                    <img width="220" style="border-radius:16px;" src="/media/users/def.jpg" alt="">
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-actions">
+            <a class="btn btn-outline" href="{% url 'update_profile' request.user.id %}">Update Profile</a>
+            <a class="btn btn-outline" href="{% url 'aplicationss' %}">My Applications</a>
+        </div>
+    </section>
+{% endfor %}
+{% endblock %}
