@@ -1,32 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {% for i in e %}
-        <p>{{i.user.username}}</p>
-        <p>{{i.company_name}}</p>
-        <p>{{i.user.role}}</p>
-        <p>{{i.user.age}}</p>
-        <p>{{i.user.phone}}</p>
-        <p>{{i.user.adress}}</p>
-        <p>{{i.about}}</p>
-        <img width="300px" style="border-radius: 50%;" src="{{i.logo.url}}" alt="{{i.user.username}}">
-        <p>{{i.location}}</p>
-        <p>{{i.create_at}}</p>
-        <a href="{% url 'update_profile' request.user.id %}">update_profile</a>
-        {% if i.user.img %}
-            <img width="300px" style="border-radius: 50%;" src="{{ i.user.img.url }}" alt="">
-        {% else %}
-            <img width="300px" style="border-radius: 50%;" src="/media/users/def.jpg" alt="">
-        {% endif %}
-        
-
-        <a href="{% url 'my_jobs' i.id %}">My jobs</a>
-        <a href="{% url 'aplications' %}">Aplications</a>
-    {% endfor %}
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Employer Profile | WorkFinder{% endblock %}
+{% block main %}
+{% for i in e %}
+    <section class="card">
+        <h1 class="title">{{i.company_name}}</h1>
+        <p class="subtitle">{{i.about}}</p>
+        <div class="grid grid-2">
+            <div>
+                <p><strong>Owner:</strong> {{i.user.username}}</p>
+                <p><strong>Location:</strong> {{i.location}}</p>
+                <p><strong>Phone:</strong> {{i.user.phone}}</p>
+                <p><strong>Address:</strong> {{i.user.adress}}</p>
+            </div>
+            <div class="row">
+                <img width="160" style="border-radius:16px;" src="{{i.logo.url}}" alt="{{i.user.username}}">
+                {% if i.user.img %}
+                    <img width="120" style="border-radius:16px;" src="{{ i.user.img.url }}" alt="">
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-actions">
+            <a class="btn btn-outline" href="{% url 'update_profile' request.user.id %}">Update Profile</a>
+            <a class="btn btn-outline" href="{% url 'my_jobs' i.id %}">My Jobs</a>
+            <a class="btn btn-outline" href="{% url 'aplications' %}">Applications</a>
+            <a class="btn" href="{% url 'create_job' %}">Create Job</a>
+        </div>
+    </section>
+{% endfor %}
+{% endblock %}
