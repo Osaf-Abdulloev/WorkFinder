@@ -1,22 +1,23 @@
 {% extends "acc/reg.html" %}
 
 {% block main %}
+<section class="card">
+    <h1 class="title">Login</h1>
     <form action="" method="post">
         {% csrf_token %}
-
-        <label for="username">Username</label><br>
-         <input type="text" name="username" id=""><br><br>
-        
-        <label for="pas">Password</label><br>
-         <input type="text" name="pas" id=""><br><br>
-        
+        <label>Username or email</label>
+        <input type="text" name="username">
+        <label>Password</label>
+        <input type="password" name="pas">
         {% if eror %}
-            <p>{{eror}}</p>
+            <p style="color:#ff9ea7">{{eror}}</p>
             {% if eror == 'imvalid username or password' %}
-                <a href="{% url 'forget' %}">Forget password ?</a><br><br>
+                <a class="muted" href="{% url 'forget' %}">Forget password?</a>
             {% endif %}
         {% endif %}
-        
-        <button type="submit">Login</button>
+        <div class="form-actions">
+            <button class="btn" type="submit">Login</button>
+        </div>
     </form>
+</section>
 {% endblock %}
