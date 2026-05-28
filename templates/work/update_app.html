@@ -1,20 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Update Application | WorkFinder{% endblock %}
+{% block main %}
+<section class="card">
+    <h1 class="title">Update Application</h1>
     <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}        
-        <label for="sms">sms for emploeer</label><br>
-        <textarea name="sms" placeholder="{{app.sms}}" id=""></textarea><br><br>
-
-        <label for="resume">resume</label><br>
-        <input type="file" name="resume" value="{{app.resume}}" id=""><br><br>
-
-        <button type="submit">Submit</button>
+        {% csrf_token %}
+        <label>Message for employer</label>
+        <textarea name="sms">{{app.sms}}</textarea>
+        <label>Upload new resume (optional)</label>
+        <input type="file" name="resume">
+        <div class="form-actions">
+            <button class="btn" type="submit">Save Update</button>
+        </div>
     </form>
-</body>
-</html>
+</section>
+{% endblock %}
