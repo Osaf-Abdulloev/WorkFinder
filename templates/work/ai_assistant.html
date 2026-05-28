@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}AI Assistant | WorkFinder{% endblock %}
+{% block main %}
+<section class="card">
+    <h1 class="title">AI Career Assistant</h1>
+    <p class="subtitle">Ask for resume advice, interview tips, or job search strategy.</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label>Your question</label>
+        <textarea name="q" placeholder="Example: How can I improve my backend developer resume?">{{ question }}</textarea>
+        <div class="form-actions">
+            <button class="btn" type="submit">Generate Advice</button>
+        </div>
+    </form>
+</section>
+
+{% if answer %}
+    <section class="card" style="margin-top:16px;">
+        <h3>AI Response</h3>
+        <p>{{ answer }}</p>
+    </section>
+{% endif %}
+{% endblock %}
