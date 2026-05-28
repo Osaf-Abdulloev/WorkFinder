@@ -1,27 +1,25 @@
 {% extends "acc/reg.html" %}
 
 {% block main %}
-        <form action="{% url 'seek' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-
-            <label for="bio">bio</label><br>
-            <input type="text" name="bio" id=""><br><br>
-            
-            <label for="resume">Resume</label><br>
-            <input type="file" name="resume" id=""><br><br>
-
-            <label for="exp">Experience</label><br>
-            <input type="number" name="exp" id=""><br><br>
-
-            <label for="edu">Education</label><br>
-            <input type="text" name="edu" id=""><br><br>
-
-            <label for="burth_date">burth date</label><br>
-            <input type="date" name="burth_date" id=""><br><br>
-
-            <label for="adress">Adress</label><br>
-            <input type="text" name="adress" id=""><br><br>
-
-            <button type="submit">Countinue</button>
-        </form>
+<section class="card">
+    <h1 class="title">Complete Seeker Profile</h1>
+    <form action="{% url 'seek' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Bio</label>
+        <input type="text" name="bio">
+        <label>Resume</label>
+        <input type="file" name="resume">
+        <label>Experience (years)</label>
+        <input type="number" name="exp">
+        <label>Education</label>
+        <input type="text" name="edu">
+        <label>Birth date</label>
+        <input type="date" name="burth_date">
+        <label>Address</label>
+        <input type="text" name="adress">
+        <div class="form-actions">
+            <button class="btn" type="submit">Continue</button>
+        </div>
+    </form>
+</section>
 {% endblock  %}
