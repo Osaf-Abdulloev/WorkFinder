@@ -1,59 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Create Job | WorkFinder{% endblock %}
+{% block main %}
+<section class="card">
+    <h1 class="title">Create New Job</h1>
     <form action="{% url 'create_job' %}" method="post">
         {% csrf_token %}
+        <label>Company</label>
         <select name="company" required>
             <option value="">Choose company</option>
-        
             {% for i in e %}
-                <option value="{{ i.id }}">
-                    {{ i.company_name }}
-                </option>
+                <option value="{{ i.id }}">{{ i.company_name }}</option>
             {% endfor %}
-        </select><br><br>
-        
-        <label for="title">title</label><br>
-        <input type="text" name="title" id=""><br><br>
-
-        <label for="description">Description</label><br>
-        <textarea name="description" id=""></textarea><br><br>
-
-        <label for="sallary">sallary</label><br>
-        <input type="number" name="sallary" id=""><br><br>
-        
-        <label for="location">location</label><br>
-        <input type="text" name="location" id=""><br><br>
-        
+        </select>
+        <label>Title</label>
+        <input type="text" name="title" required>
+        <label>Description</label>
+        <textarea name="description" required></textarea>
+        <label>Salary</label>
+        <input type="number" name="sallary" required>
+        <label>Location</label>
+        <input type="text" name="location" required>
+        <label>Job type</label>
         <select name="job_type">
             {% for value, name in job_types %}
-
-                <option value="{{ value }}">
-                    {{ name }}
-                </option>
-
+                <option value="{{ value }}">{{ name }}</option>
             {% endfor %}
-        </select><br><br>
-
-        <label for="exp_req">exp requaried (in year)</label><br>
-        <input type="number" name="exp_req" id=""><br><br>
-
+        </select>
+        <label>Experience required (years)</label>
+        <input type="number" name="exp_req" required>
+        <label>Category</label>
         <select name="category" required>
             <option value="">Choose category</option>
-        
             {% for i in c %}
-                <option value="{{ i.id }}">
-                    {{ i.name }}
-                </option>
+                <option value="{{ i.id }}">{{ i.name }}</option>
             {% endfor %}
-        </select><br><br>
-
-        <button type="submit">Submit</button>
+        </select>
+        <div class="form-actions">
+            <button class="btn" type="submit">Publish Job</button>
+        </div>
     </form>
-</body>
-</html>
+</section>
+{% endblock %}
