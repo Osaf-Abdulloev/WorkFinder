@@ -6,10 +6,33 @@ from django.db.models import Q, Count
 from groq import Groq
 # Create your views here.
 
+
+
+def _get_recommended_jobs(user):
+    jobs = Job.objects.select_related("company", "category").all()
+    if not user.is_authenticated:
+        return jobs.order_by("-created_at")[:6]
+
+    seeker = Seeker.objects.filter(user=user).first()
+    if not seeker:
+        return jobs.order_by("-created_at")[:6]
+
+    applications = Application.objects.filter(user=user).values("job__category")
+    category_ids = [item["job__category"] for item in applications if item["job__category"]]
+
+    related = jobs.filter(category_id__in=category_ids)
+    if seeker.exp is not None:
+        related = related.filter(exp_req__lte=seeker.exp + 2)
+
+    return (related | jobs.order_by("-created_at")).distinct()[:6]
+
+
 def home(request):
-    user = User.objects.all()
-    
-    return render(request, 'work/home.html', context={'us' : user})
+    categories = Category.objects.annotate(job_count=Count("job")).order_by("name")
+    latest_jobs = Job.objects.select_related("company", "category").order_by("-created_at")[:6]
+    recommended_jobs = _get_recommended_jobs(request.user)
+    context = {"categories": categories,"latest_jobs": latest_jobs,"recommended_jobs": recommended_jobs,}
+    return render(request, "work/home.html", context=context)
 
 
 def erorpage(request):
@@ -17,9 +40,28 @@ def erorpage(request):
 
 
 def all_jobs(request):
-    j = Job.objects.select_related('company', 'category')
-    
-    return render(request, 'work/all_jobs.html', context={'j' : j})
+    jobs = Job.objects.select_related("company", "category").order_by("-created_at")
+    q = request.GET.get("q", "").strip()
+    category = request.GET.get("category", "").strip()
+    job_type = request.GET.get("job_type", "").strip()
+
+    if q:
+        jobs = jobs.filter(Q(title__icontains=q)| Q(category__name__icontains=q)| Q(company__company_name__icontains=q)| Q(location__icontains=q))
+        
+    if category:
+        jobs = jobs.filter(category_id=category)
+    if job_type:
+        jobs = jobs.filter(job_type=job_type)
+
+    favorite_ids = []
+    if request.user.is_authenticated:
+        favorite_ids = list(Favorite.objects.filter(user=request.user).values_list("job_id", flat=True))
+
+    return render(
+        request,
+        "work/all_jobs.html",
+        context={"j": jobs,"categories": Category.objects.order_by("name"),"job_types": Job.JOB_TYPE,"favorite_ids": favorite_ids,"q": q,"selected_category": category,"selected_job_type": job_type,},
+    )
 
 
 @permission_required('work.add_job', login_url='erorpage')
@@ -53,10 +95,7 @@ def my_jobs(request, pk):
 def search(request):
     if request.method == "GET":
         q = request.GET.get('q', '')
-        
-        j = Job.objects.filter( Q(title__icontains=q) | Q(category__name__icontains=q) | Q(company__company_name__icontains=q))
-        
-        return render(request, 'work/all_jobs.html', context={'j' : j})
+        return redirect(f"/all_jobs/?q={q}")
 
 @permission_required('work.change_job', login_url='erorpage')
 def update_job(request, pk):
@@ -120,16 +159,18 @@ def aplicate(request, pk):
     return render(request, 'work/aplicate.html')
 
 
+@login_required(login_url="login")
 def aplications(request):
     user = request.user.emploeer
-    aplications = Application.objects.filter(job__company = user)
+    aplications = Application.objects.filter(job__company=user).select_related("job", "user", "job__company").order_by("-created_at")
     
     return render(request, 'work/aplications.html', context={'apl' : aplications})
 
 
+@login_required(login_url="login")
 def aplicationss(request):
     user = request.user
-    aplications = Application.objects.filter(user = user)
+    aplications = Application.objects.filter(user=user).select_related("job", "job__company").order_by("-created_at")
     
     return render(request, 'work/aplicationss.html', context={'apl' : aplications})
 
