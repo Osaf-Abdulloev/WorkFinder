@@ -1,16 +1,18 @@
 {% extends "acc/reg.html" %}
 
 {% block main %}
+<section class="card">
+    <h1 class="title">Password Recovery</h1>
     <form action="{% url 'forget' %}" method="post">
         {% csrf_token %}
-
-        <label for="email">Email</label><br>
-         <input type="text" name="email" id=""><br><br>
-        
+        <label>Email</label>
+        <input type="text" name="email">
         {% if eror %}
-            <p>{{eror}}</p>
+            <p style="color:#ff9ea7">{{eror}}</p>
         {% endif %}
-        
-        <button type="submit">Confirm</button>
+        <div class="form-actions">
+            <button class="btn" type="submit">Send Code</button>
+        </div>
     </form>
+</section>
 {% endblock %}
