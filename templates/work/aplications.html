@@ -1,25 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Applications | WorkFinder{% endblock %}
+{% block main %}
+<h1 class="title">Incoming Applications</h1>
+<section class="job-list">
     {% for i in apl %}
-        <p>{{ i.job.title }}</p>
-        <p>{{ i.user.username }}</p>
-        <p>{{ i.sms }}</p>
-
-        {% if i.resume and i.resume.name %}
-            <a href="{{ i.resume.url }}" target="_blank">Резюме</a>
-        {% else %}
-            <p>Резюме не прикреплено</p>
-        {% endif %}
-
-        <p>{{ i.status }}</p>
-        <p>{{ i.created_at }}</p>
-        <a href="{% url 'profile' i.user.id %}">Profile</a>
+        <article class="card">
+            <div class="between">
+                <div>
+                    <h3 style="margin:0;">{{ i.job.title }}</h3>
+                    <p class="muted">{{ i.user.username }} • {{ i.created_at }}</p>
+                </div>
+                <strong class="status-{{ i.status }}">{{ i.status }}</strong>
+            </div>
+            <p>{{ i.sms }}</p>
+            <div class="row">
+                {% if i.resume and i.resume.name %}
+                    <a class="btn btn-outline" href="{{ i.resume.url }}" target="_blank">Open Resume</a>
+                {% else %}
+                    <span class="muted">Resume not attached</span>
+                {% endif %}
+                <a class="btn btn-outline" href="{% url 'profile' i.user.id %}">Applicant Profile</a>
+                <a class="btn btn-outline" href="mailto:{{ i.user.email }}">Send Message</a>
+                {% if i.user.phone %}
+                    <a class="btn btn-outline" href="tel:{{ i.user.phone }}">Call Worker</a>
+                {% endif %}
+            </div>
+            <div class="form-actions">
+                <a class="btn" href="{% url 'application_action' i.id 'approve' %}">Approve</a>
+                <a class="btn btn-outline" href="{% url 'application_action' i.id 'reject' %}">Reject</a>
+                <a class="btn btn-outline" href="{% url 'application_action' i.id 'cancel' %}">Cancel</a>
+            </div>
+        </article>
+    {% empty %}
+        <article class="card"><p class="muted">No applications yet.</p></article>
     {% endfor %}
-</body>
-</html>
+</section>
+{% endblock %}
