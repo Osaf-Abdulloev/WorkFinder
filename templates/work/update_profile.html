@@ -1,41 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
+{% extends "base.html" %}
+{% block title %}Update Profile | WorkFinder{% endblock %}
+{% block main %}
+<section class="card">
+    <h1 class="title">Update Profile</h1>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-
-        <input name="username" value="{{ user.username }}"><br><br>
-        <input name="email" value="{{ user.email }}"><br><br>
-        <input name="phone" value="{{ user.phone }}"><br><br>
-        <input name="age" value="{{ user.age }}"><br><br>
-        <input name="adress" value="{{ user.adress }}"><br><br>
-
-        <input type="file" name="img"><br><br>
-
-        {% if seeker %}
-            <textarea name="bio">{{ seeker.bio }}</textarea><br><br>
-            <input name="exp" value="{{ seeker.exp }}"><br><br>
-            <input name="edu" value="{{ seeker.edu }}"><br><br>
-            <input type="date" name="burth_date" value="{{ seeker.burth_date }}"><br><br>
-            <input type="file" name="resume"><br><br>
-        {% endif %}
-
-        {% if employer %}
-            <input name="company_name" value="{{ employer.company_name }}"><br><br>
-            <textarea name="about">{{ employer.about }}</textarea><br><br>
-            <input name="location" value="{{ employer.location }}"><br><br>
-            <input type="file" name="logo"><br><br>
-        {% endif %}
-
-        <button type="submit">Update</button>
+        <div class="grid grid-2">
+            <div>
+                <label>Username</label>
+                <input name="username" value="{{ user.username }}">
+                <label>Email</label>
+                <input name="email" value="{{ user.email }}">
+                <label>Phone</label>
+                <input name="phone" value="{{ user.phone }}">
+                <label>Age</label>
+                <input name="age" value="{{ user.age }}">
+                <label>Address</label>
+                <input name="adress" value="{{ user.adress }}">
+                <label>Avatar</label>
+                <input type="file" name="img">
+            </div>
+            <div>
+                {% if seeker %}
+                    <label>Bio</label>
+                    <textarea name="bio">{{ seeker.bio }}</textarea>
+                    <label>Experience</label>
+                    <input name="exp" value="{{ seeker.exp }}">
+                    <label>Education</label>
+                    <input name="edu" value="{{ seeker.edu }}">
+                    <label>Birth date</label>
+                    <input type="date" name="burth_date" value="{{ seeker.burth_date|date:'Y-m-d' }}">
+                    <label>Resume</label>
+                    <input type="file" name="resume">
+                {% endif %}
+                {% if employer %}
+                    <label>Company Name</label>
+                    <input name="company_name" value="{{ employer.company_name }}">
+                    <label>About Company</label>
+                    <textarea name="about">{{ employer.about }}</textarea>
+                    <label>Company Location</label>
+                    <input name="location" value="{{ employer.location }}">
+                    <label>Company Logo</label>
+                    <input type="file" name="logo">
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn" type="submit">Save Profile</button>
+        </div>
     </form>
-</body>
-
-</html>
+</section>
+{% endblock %}
