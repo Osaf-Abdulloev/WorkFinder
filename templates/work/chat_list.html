@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Chats | WorkFinder{% endblock %}
+{% block main %}
+<h1 class="title">My Chats</h1>
+<section class="job-list">
+    {% for c in chats %}
+        <article class="card">
+            {% if c.user1_id == request.user.id %}
+                <a class="btn btn-outline" href="{% url 'chat' c.user2_id %}">Chat with {{ c.user2.username }}</a>
+            {% else %}
+                <a class="btn btn-outline" href="{% url 'chat' c.user1_id %}">Chat with {{ c.user1.username }}</a>
+            {% endif %}
+        </article>
+    {% empty %}
+        <article class="card"><p class="muted">No chats yet.</p></article>
+    {% endfor %}
+</section>
+{% endblock %}
