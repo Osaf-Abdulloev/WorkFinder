@@ -338,3 +338,31 @@ def chat_list(request):
     chats = Chat.objects.filter(Q(user1=request.user) | Q(user2=request.user))
     return render(request, 'work/chat_list.html', context={'chats': chats})
 
+
+
+
+@login_required(login_url="login")
+def chat(request, pk):
+    other = get_object_or_404(User, pk=pk)
+    
+    if other.id == request.user.id:
+        return redirect('chat_list')
+    
+    if request.user.role == other.role:
+        return redirect('erorpage')
+    
+    c = Chat.objects.filter(
+        Q(user1=request.user, user2=other) | Q(user1=other, user2=request.user)
+    ).first()
+    
+    if not c:
+        c = Chat.objects.create(user1=request.user, user2=other)
+    
+    if request.method == 'POST':
+        text = request.POST.get('text', '').strip()
+        if text:
+            Message.objects.create(chat=c, sender=request.user, text=text)
+        return redirect('chat', pk=pk)
+    
+    msgs = c.messages.all().order_by('created_at')
+    return render(request, 'work/chat.html', context={'other': other, 'msgs': msgs})
