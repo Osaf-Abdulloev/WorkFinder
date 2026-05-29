@@ -20,6 +20,9 @@
             </div>
         </div>
         <div class="form-actions">
+            {% if request.user.is_authenticated and request.user.id != i.user.id %}
+                <a class="btn" href="{% url 'chat' i.user.id %}">Message</a>
+            {% endif %}
             <a class="btn btn-outline" href="{% url 'update_profile' request.user.id %}">Update Profile</a>
             <a class="btn btn-outline" href="{% url 'my_jobs' i.id %}">My Jobs</a>
             <a class="btn btn-outline" href="{% url 'aplications' %}">Applications</a>

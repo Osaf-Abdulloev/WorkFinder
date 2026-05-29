@@ -18,6 +18,7 @@
                 {% if request.user.is_authenticated %}
                     <a href="{% url 'profile' request.user.id %}">Profile</a>
                     <a href="{% url 'saved_jobs' %}">Saved</a>
+                    <a href="{% url 'chat_list' %}">Chats</a>
                     <a href="{% url 'ai_assistant' %}">AI Assistant</a>
                     <a href="{% url 'logout_us' %}" class="btn btn-outline">Logout</a>
                 {% else %}

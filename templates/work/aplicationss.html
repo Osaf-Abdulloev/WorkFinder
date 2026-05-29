@@ -19,6 +19,7 @@
                 {% else %}
                     <span class="muted">No resume attached</span>
                 {% endif %}
+                <a class="btn btn-outline" href="{% url 'chat' i.job.company.user.id %}">Message</a>
                 <a class="btn btn-outline" href="{% url 'update_app' i.id %}">Update</a>
                 <a class="btn btn-outline" href="{% url 'delete_app' i.id %}">Cancel Application</a>
             </div>

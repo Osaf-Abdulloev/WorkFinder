@@ -89,9 +89,13 @@ def my_jobs(request, pk):
 
 
 def search(request):
-    if request.method == "GET":
-        q = request.GET.get('q', '')
-        return redirect(f"/all_jobs/?q={q}")
+    q = request.GET.get('q', '')
+
+    jobs = Job.objects.filter(title__icontains=q)
+
+    return render(request, 'all_jobs.html', {
+        'jobs': jobs
+    })
 
 @permission_required('work.change_job', login_url='erorpage')
 def update_job(request, pk):
@@ -247,7 +251,7 @@ def update_profile(request, pk):
 @login_required(login_url="login")
 def saved_jobs(request):
     favorites = Favorite.objects.filter(user=request.user).select_related("job", "job__company", "job__category")
-    return render(request, "work/saved_jobs.html", {"favorites": favorites})
+    return render(request, "work/saved_jobs.html", context={"favorites": favorites})
 
 
 
@@ -273,8 +277,7 @@ def ai_assistant(request):
 
     jobs = Job.objects.all().order_by("-id")[:10]
 
-    context = "\n".join([
-        f"Title: {job.title}\nDescription: {job.description}\nCompany: {job.company.company_name}"for job in jobs])
+    context = "\n".join([f"Title: {job.title}\nDescription: {job.description}\nCompany: {job.company.company_name}"for job in jobs])
 
     if request.method == "POST":
         question = request.POST.get("q", "").strip()

@@ -108,6 +108,7 @@ def sendcode(user):
          print(e, '========================================')
 
 
+
 def register(request):
     if request.method == "POST":
         username = request.POST.get('username')

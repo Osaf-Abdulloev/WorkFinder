@@ -20,7 +20,7 @@
                     <span class="muted">Resume not attached</span>
                 {% endif %}
                 <a class="btn btn-outline" href="{% url 'profile' i.user.id %}">Applicant Profile</a>
-                <a class="btn btn-outline" href="mailto:{{ i.user.email }}">Send Message</a>
+                <a class="btn btn-outline" href="{% url 'chat' i.user.id %}">Message</a>
                 {% if i.user.phone %}
                     <a class="btn btn-outline" href="tel:{{ i.user.phone }}">Call Worker</a>
                 {% endif %}
