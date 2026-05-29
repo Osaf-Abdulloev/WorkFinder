@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Chat | WorkFinder{% endblock %}
+{% block main %}
+<h1 class="title">Chat with {{ other.username }}</h1>
+<p class="subtitle"><a href="{% url 'chat_list' %}">Back to chats</a></p>
+
+<section class="job-list">
+    {% for m in msgs %}
+        <article class="card">
+            <p class="muted">{{ m.sender.username }} • {{ m.created_at }}</p>
+            <p>{{ m.text }}</p>
+        </article>
+    {% empty %}
+        <article class="card"><p class="muted">No messages yet.</p></article>
+    {% endfor %}
+</section>
+
+<section class="card" style="margin-top:16px;">
+    <form action="" method="post">
+        {% csrf_token %}
+        <label>Message</label>
+        <textarea name="text" placeholder="Type your message..."></textarea>
+        <div class="form-actions">
+            <button class="btn" type="submit">Send</button>
+        </div>
+    </form>
+</section>
+{% endblock %}
