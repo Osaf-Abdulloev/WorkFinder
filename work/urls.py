@@ -21,4 +21,6 @@ urlpatterns = [
     path('delete_favorite/<int:pk>', views.delete_favorite, name='delete_favorite'),
     path('ai_assistant/', views.ai_assistant, name='ai_assistant'),
     path('application_action/<int:pk>/<str:action>/', views.application_action, name='application_action'),
+    path('chats/', views.chat_list, name='chat_list'),
+    path('chat/<int:pk>/', views.chat, name='chat'),
 ]
