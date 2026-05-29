@@ -331,3 +331,10 @@ def application_action(request, pk, action):
     app.save()
     return redirect("aplications")
 
+
+
+@login_required(login_url="login")
+def chat_list(request):
+    chats = Chat.objects.filter(Q(user1=request.user) | Q(user2=request.user))
+    return render(request, 'work/chat_list.html', context={'chats': chats})
+
