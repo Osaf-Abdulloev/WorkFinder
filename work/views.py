@@ -4,6 +4,7 @@ from .models import *
 from django.contrib.auth.decorators import permission_required, login_required
 from django.db.models import Q, Count
 from groq import Groq
+from .forms import *
 # Create your views here.
 
 
@@ -148,15 +149,27 @@ def aplicate(request, pk):
     job = get_object_or_404(Job, pk=pk)
     
     if request.method == "POST":
-        Application.objects.create(
-            job_id = job.id,
-            user_id = request.user.id,
-            sms = request.POST.get('sms'),
-            resume = request.FILES.get('resume'),
-            status = 'Sended'
-        )
-        return redirect('all_jobs')
-    return render(request, 'work/aplicate.html')
+        form = AplicateForm(request.POST, request.FILES)
+        
+        if form.is_valid():
+            
+            Application.objects.create(
+                job_id = job.id,
+                user_id = request.user.id,
+                sms = form.cleaned_data.get('sms'),
+                resume = form.cleaned_data.get('resume'),
+                status = 'sended'
+            )
+            return redirect('/')
+        else:
+            return redirect('403.html')
+        
+    else:
+        formm = AplicateForm()
+        return render(request, 'work/aplicate.html', context={'form' : formm})
+
+
+
 
 
 @login_required(login_url="login")

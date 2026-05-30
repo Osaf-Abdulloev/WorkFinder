@@ -5,10 +5,9 @@
     <h1 class="title">Send Application</h1>
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <label>Message for employer</label>
-        <textarea name="sms" placeholder="Write a short introduction and why you match this role."></textarea>
-        <label>Resume</label>
-        <input type="file" name="resume">
+        
+        {{form}}
+
         <div class="form-actions">
             <button class="btn" type="submit">Send Application</button>
             <a class="btn btn-outline" href="{% url 'all_jobs' %}">Back to Jobs</a>
